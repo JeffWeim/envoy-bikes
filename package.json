@@ -4,6 +4,7 @@
   "description": "A Vue.js project",
   "author": "Jeff Weimer <jweimer@weareenvoy.com>",
   "private": true,
+  "homepage": "https://weareenvoy.github.io/envoy-bikes",
   "scripts": {
     "dev": "node build/dev-server.js",
     "start": "npm run dev",
