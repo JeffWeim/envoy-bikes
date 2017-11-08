@@ -13,10 +13,6 @@ export default new Router({
       path: '/',
       name: 'Home',
       component: resolve => require(['@/views/Home.vue'], resolve),
-    },
-    {
-      path: '*',
-      redirect: '/'
     }
   ]
 })
