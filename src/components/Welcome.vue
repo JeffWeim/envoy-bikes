@@ -6,7 +6,7 @@
       <span class="welcome__actions-holder">
         <a class="triangle triangle--previous" v-if="additional !== 0" href="#" @click.prevent="getPrevious">Previous Day</a>
       </span>
-      <h2>Schedule for {{ today }}</h2>
+      <h2>Schedule for {{ formatToday(today) }}</h2>
       <a class="triangle triangle--next" href="#" @click.prevent="getNext">Next Day</a>
     </div>
   </div>
@@ -36,10 +36,33 @@
       }
     },
     methods: {
+      formatToday(val) {
+        let days = ['Sunday','Monday','Tuesday','Wednesday','Thursday','Friday','Saturday']
+        let months = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December']
+
+        let today = new Date(val)
+        let year = today.getFullYear()
+        let month = today.getUTCMonth()
+        let day = today.getDay()
+        let dayNumeric = today.getDate()
+
+        if (dayNumeric < 10) {
+          dayNumeric = `0${dayNumeric}`
+        }
+
+        return `${days[day]}, ${months[month]} ${dayNumeric}th`
+      },
       getNext() {
+        let currentDate = new Date(new Date().getTime() + 24 * 60 * 60 * 1000)
+        let day = currentDate.getDay() + this.additional
+        let isWeekend = (day == 6) || (day == 0)
+
+        if (isWeekend) {
+          this.additional += 2
+        }
+
         this.$store.dispatch('setPrevious', this.today)
         let self = this
-        let currentDate = new Date(new Date().getTime() + 24 * 60 * 60 * 1000)
         let dd = currentDate.getDate() + this.additional
         let mm = currentDate.getMonth() + 1
         let yyyy = currentDate.getFullYear()
@@ -78,10 +101,21 @@
         this.additional += 1
       },
       getPrevious() {
-        let self = this
         let currentDate = new Date(this.today)
-        let dd = currentDate.getDate() - 1
-        let ddPrevious = currentDate.getDate() - 2
+        let day = currentDate.getDay() + this.additional
+        let isWeekend = (day == 6) || (day == 0)
+        let buffer1 = 1
+        let buffer2 = 2
+
+        if (isWeekend) {
+          buffer1 += 2
+          buffer2 += 2
+          this.additional -= 2
+        }
+
+        let self = this
+        let dd = currentDate.getDate() - buffer1
+        let ddTwoPrevious = currentDate.getDate() - buffer2
         let mm = currentDate.getMonth() + 1
         let yyyy = currentDate.getFullYear()
 
@@ -89,8 +123,8 @@
           dd = `0${dd}`
         }
 
-        if (ddPrevious < 10) {
-          ddPrevious = `0${ddPrevious}`
+        if (ddTwoPrevious < 10) {
+          ddTwoPrevious = `0${ddTwoPrevious}`
         }
 
         if (mm < 10) {
@@ -98,7 +132,7 @@
         }
 
         let previousDay = `${mm}/${dd}/${yyyy}`
-        let twoPreviousDays = `${mm}/${ddPrevious}/${yyyy}`
+        let twoPreviousDays = `${mm}/${ddTwoPrevious}/${yyyy}`
 
         this.$store.dispatch('setToday', previousDay)
         this.$store.dispatch('setPrevious', twoPreviousDays)

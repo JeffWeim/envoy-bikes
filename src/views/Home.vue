@@ -48,9 +48,18 @@
     },
     methods: {
       getData() {
-        let self = this
         let today = new Date()
-        let dd = today.getDate()
+        var day = today.getDay();
+        var isWeekend = (day == 6) || (day == 0);
+        let dd
+
+        if (isWeekend) {
+          dd = today.getDate() + 2
+        } else {
+          dd = today.getDate()
+        }
+
+        let self = this
         let mm = today.getMonth() + 1
         let yyyy = today.getFullYear()
 
