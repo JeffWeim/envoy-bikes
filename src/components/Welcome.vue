@@ -132,7 +132,7 @@
 <style scoped lang="scss">
   .welcome {
     h1 {
-      color: #E9785E;
+      color: #eb4e3b;
       font-size: 50px;
     }
 
@@ -151,9 +151,10 @@
     }
 
     a {
-      color: #E9785E;
+      color: #eb4e3b;
       text-decoration: none;
       position: relative;
+      font-weight: bold;
     }
 
     &__actions {
@@ -164,6 +165,7 @@
 
     &__actions-holder {
       display: block;
+      min-width: 97px;
     }
 
     .triangle {
@@ -171,7 +173,7 @@
         &:after {
           content: '';
           position: absolute;
-          border-right: solid 8px #E9785E;
+          border-right: solid 8px #eb4e3b;
           border-bottom: solid 8px transparent;
           border-top: solid 8px transparent;
           left: -20px;
@@ -183,7 +185,7 @@
         &:after {
           content: '';
           position: absolute;
-          border-left: solid 8px #E9785E;
+          border-left: solid 8px #eb4e3b;
           border-bottom: solid 8px transparent;
           border-top: solid 8px transparent;
           right: -20px;

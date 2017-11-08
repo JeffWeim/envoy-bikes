@@ -69,7 +69,7 @@
     &__header  {
       h3 {
         margin-top: 0;
-        color: #E9785E;
+        color: #eb4e3b;
       }
     }
 
@@ -102,9 +102,9 @@
     }
 
     a {
-      color: #E9785E;
+      color: #eb4e3b;
       text-decoration: none;
-      border: 1px solid #E9785E;
+      border: 1px solid #eb4e3b;
       border-radius: 5px;
       padding: 5px;
     }
@@ -114,8 +114,8 @@
       cursor: pointer;
       background: transparent;
       font-size: 15px;
-      border: 1px solid #E9785E;
-      color: #E9785E;
+      border: 1px solid #eb4e3b;
+      color: #eb4e3b;
     }
 
     /*
