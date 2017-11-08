@@ -1,7 +1,6 @@
 module.exports = {
   "day": "",
   "contains_reservations": false,
-  "days": ["Sunday","Monday","Tuesday","Wednesday","Thursday","Friday","Saturday"],
   "times": [
     {
       "id": 0,
@@ -10,7 +9,6 @@ module.exports = {
         "a": "",
         "b": ""
       },
-      "reserved": false
     },
     {
       "id": 1,
@@ -19,7 +17,6 @@ module.exports = {
         "a": "",
         "b": ""
       },
-      "reserved": false
     },
     {
       "id": 2,
@@ -28,7 +25,6 @@ module.exports = {
         "a": "",
         "b": ""
       },
-      "reserved": false
     },
     {
       "id": 3,
@@ -37,7 +33,6 @@ module.exports = {
         "a": "",
         "b": ""
       },
-      "reserved": false
     },
     {
       "id": 4,
@@ -46,7 +41,6 @@ module.exports = {
         "a": "",
         "b": ""
       },
-      "reserved": false
     },
     {
       "id": 5,
@@ -55,7 +49,6 @@ module.exports = {
         "a": "",
         "b": ""
       },
-      "reserved": false
     },
     {
       "id": 6,
@@ -64,7 +57,6 @@ module.exports = {
         "a": "",
         "b": ""
       },
-      "reserved": false
     },
     {
       "id": 7,
@@ -73,7 +65,6 @@ module.exports = {
         "a": "",
         "b": ""
       },
-      "reserved": false
     },
     {
       "id": 8,
@@ -82,7 +73,6 @@ module.exports = {
         "a": "",
         "b": ""
       },
-      "reserved": false
     },
     {
       "id": 9,
@@ -91,7 +81,6 @@ module.exports = {
         "a": "",
         "b": ""
       },
-      "reserved": false
     },
     {
       "id": 10,
@@ -100,7 +89,6 @@ module.exports = {
         "a": "",
         "b": ""
       },
-      "reserved": false
     },
     {
       "id": 11,
@@ -109,7 +97,6 @@ module.exports = {
         "a": "",
         "b": ""
       },
-      "reserved": false
     },
     {
       "id": 12,
@@ -118,7 +105,6 @@ module.exports = {
         "a": "",
         "b": ""
       },
-      "reserved": false
     },
     {
       "id": 12,
@@ -127,7 +113,6 @@ module.exports = {
         "a": "",
         "b": ""
       },
-      "reserved": false
     },
     {
       "id": 13,
@@ -136,7 +121,6 @@ module.exports = {
         "a": "",
         "b": ""
       },
-      "reserved": false
     },
     {
       "id": 14,
@@ -145,7 +129,6 @@ module.exports = {
         "a": "",
         "b": ""
       },
-      "reserved": false
     }
   ]
 }

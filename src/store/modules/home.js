@@ -3,7 +3,9 @@ const home = {
   state: {
     dayData: [],
     key: '',
-    daysRef: {}
+    daysRef: {},
+    today: '',
+    previous: ''
   },
   mutations: {
     SET_DAY_DATA(state, data) {
@@ -14,6 +16,12 @@ const home = {
     },
     SET_DAYS_REFERENCE(state, data) {
       state.daysRef = data
+    },
+    SET_TODAY(state, data) {
+      state.today = data
+    },
+    SET_PREVIOUS(state, data) {
+      state.previous = data
     },
   },
   actions: {
@@ -26,11 +34,19 @@ const home = {
     setDaysReference({ dispatch, commit }, data) {
       commit('SET_DAYS_REFERENCE', data)
     },
+    setToday({ dispatch, commit }, data) {
+      commit('SET_TODAY', data)
+    },
+    setPrevious({ dispatch, commit }, data) {
+      commit('SET_PREVIOUS', data)
+    },
   },
   getters: {
     dayData: state => state.dayData,
     key: state => state.key,
     daysRef: state => state.daysRef,
+    today: state => state.today,
+    previous: state => state.previous,
   }
 }
 

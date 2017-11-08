@@ -1,7 +1,7 @@
 <template>
   <section class="home">
 
-    <welcome :date="today"></welcome>
+    <welcome></welcome>
 
     <TimeBlock :key="time.id" v-for="time in dayData.times" :time="time"></TimeBlock>
 
@@ -35,17 +35,15 @@
     firebase: {
       days: db.ref('days')
     },
-    data() {
-      return {
-        today: ''
-      }
-    },
     computed: {
       dayData() {
         return this.$store.state.home.dayData
       },
       key() {
         return this.$store.getters.key
+      },
+      today() {
+        return this.$store.getters.today
       }
     },
     methods: {
@@ -65,7 +63,8 @@
         }
 
         today = `${mm}/${dd}/${yyyy}`
-        this.today = today
+        this.$store.dispatch('setToday', today)
+        this.$store.dispatch('setPrevious', today)
 
         let emptyDayData = require('../data/day')
         emptyDayData.day = today
@@ -103,5 +102,6 @@
     margin: 0 auto;
     text-align: center;
     display: block;
+    margin-bottom: 5rem;
   }
 </style>

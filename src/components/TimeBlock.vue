@@ -1,6 +1,6 @@
 
 <template>
-  <div class="time-block">
+  <section class="time-block">
     <div class="time-block__time">
       <p>{{ time.time_text }}</p>
     </div>
@@ -20,7 +20,7 @@
         <span class="time-block__card-input" v-if="showSpotAForm">
           <input placeholder="Ex. John D." maxlength="21" type="text" name="person-a" v-model="time.rider_names.a"/>
           <span>
-            <a :data-id="time.id" href="#" @click.prevent="reserveSpot($event, 'a')">Reserve</a>
+            <a :data-id="time.id" href="#" @click.prevent="toggleModal($event, 'a')">Reserve</a>
             <a href="#" @click.prevent="showSpotAForm = !showSpotAForm">Cancel</a>
           </span>
         </span>
@@ -40,22 +40,39 @@
         <span class="time-block__card-input" v-if="showSpotBForm">
           <input placeholder="Ex. John D." maxlength="21" type="text" name="person-b" v-model="time.rider_names.b"/>
           <span>
-            <a :data-id="time.id" href="#" @click.prevent="reserveSpot($event, 'b')">Reserve</a>
+            <a :data-id="time.id" href="#" @click.prevent="toggleModal($event, 'b')">Reserve</a>
             <a href="#" @click.prevent="showSpotBForm = !showSpotBForm">Cancel</a>
           </span>
         </span>
       </div>
     </div>
-  </div>
+
+    <modal v-if="showModal" @close="showModal = false">
+      <h3 slot="header">Wait!</h3>
+
+      <p slot="body">Have you filled already filled out the waiver?</p>
+
+      <div class="modal__footer-wrapper" slot="footer">
+        <button class="modal__default-button" @click="reserveSpot">Yes</button>
+
+        <a href="https://drive.google.com/open?id=1gptpjNcnKs2RnWnaRwt2rKNLX9yfmZ0eC9wOATMHJBE" target="_blank">Download Waiver</a>
+
+        <p>(Please fill out the waiver and return to HR)</p>
+      </div>
+    </modal>
+  </section>
 </template>
 
 <script>
+  import Modal from '@/components/Modal'
+
   export default {
     name: 'TimeBlock',
     props: [
       'time'
     ],
     components: {
+      Modal
     },
     data() {
       return {
@@ -65,11 +82,14 @@
         hasSpotB: false,
         showSpotAForm: false,
         showSpotBForm: false,
+        showModal: false,
+        bike: '',
+        event: undefined
       }
     },
     computed: {
       bothSpotsReserved() {
-        return (this.hasSpotA && this.hasSpotB) || this.time.reserved
+        return this.hasSpotA && this.hasSpotB
       },
       daysRef() {
         return this.$store.getters.daysRef
@@ -82,25 +102,42 @@
       }
     },
     methods: {
-      reserveSpot(e, spot) {
-        let dayId = e.srcElement.dataset.id
+      toggleModal(e, bike) {
+        this.bike = bike
+        this.event = e
 
-        if (spot === 'a') {
-          this.hasSpotA = true
-          this.showSpotAForm = !this.showSpotAForm
-          this.daysRef.child(this.key + '/times/' + dayId + '/' + 'rider_names/' + spot).set(this.time.rider_names.a)
-
+        if (localStorage.getItem('signedWaiver') !== "true") {
+          this.showModal = !this.showModal
+        } else {
+          this.showModal = false
+          this.reserveSpot()
+        }
+      },
+      reserveSpot() {
+        if (localStorage.getItem('signedWaiver') !== "true") {
+          this.showModal = !this.showModal
         }
 
-        if (spot === 'b') {
+        let dayId = this.event.srcElement.dataset.id
+        localStorage.setItem('signedWaiver', true)
+
+        if (this.bike === 'a') {
+          this.hasSpotA = true
+          this.showSpotAForm = !this.showSpotAForm
+          this.daysRef.child(this.key + '/times/' + dayId + '/' + 'rider_names/' + this.bike).set(this.time.rider_names.a)
+        }
+
+        if (this.bike === 'b') {
           this.hasSpotB = true
           this.showSpotBForm = !this.showSpotBForm
-          this.daysRef.child(this.key + '/times/' + dayId + '/' + 'rider_names/' + spot).set(this.time.rider_names.b)
+          this.daysRef.child(this.key + '/times/' + dayId + '/' + 'rider_names/' + this.bike).set(this.time.rider_names.b)
         }
 
         if (this.bothSpotsReserved) {
           this.daysRef.child(this.key + '/times/' + dayId + '/' + 'reserved/').set(true)
         }
+
+        this.daysRef.child(this.key + '/contains_reservations/').set(true)
       },
     }
   }
@@ -154,17 +191,24 @@
         margin-bottom: 0;
       }
 
+      input {
+        border: 1px solid #edeff5;
+        height: 25px;
+      }
+
       a {
         text-decoration: none;
         font-weight: bold;
         text-transform: uppercase;
-        font-size: 11px;
+        font-size: 14px;
         margin-top: 3px;
       }
 
       button {
         padding: 5px;
         cursor: pointer;
+        background: transparent;
+        font-size: 15px;
       }
 
       &--a {
@@ -192,6 +236,7 @@
 
     &__card-name {
       font-size: 20px;
+      font-weight: bold;
     }
 
     &__card-letter {
@@ -205,6 +250,7 @@
       color: white;
       font-family: 'Avenir', Helvetica, Arial, sans-serif;
       position: relative;
+      top: 10px;
 
       &:after {
         content: url('../assets/bike.svg');
@@ -227,6 +273,7 @@
     &__card-input {
       display: flex;
       flex-direction: column;
+      flex-basis: 50%;
     }
   }
 </style>

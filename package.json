@@ -11,7 +11,7 @@
     "build": "node build/build.js",
     "unit": "cross-env BABEL_ENV=test karma start test/unit/karma.conf.js --single-run",
     "test": "npm run unit",
-    "deploy": "node ./node_modules/vue-gh-pages/index.js"
+    "deploy": "npm run build && vue-cli-ghpages --message App Update"
   },
   "dependencies": {
     "firebase": "^4.6.1",
