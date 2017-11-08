@@ -133,10 +133,6 @@
           this.daysRef.child(this.key + '/times/' + dayId + '/' + 'rider_names/' + this.bike).set(this.time.rider_names.b)
         }
 
-        if (this.bothSpotsReserved) {
-          this.daysRef.child(this.key + '/times/' + dayId + '/' + 'reserved/').set(true)
-        }
-
         this.daysRef.child(this.key + '/contains_reservations/').set(true)
       },
     }
@@ -176,7 +172,7 @@
     &__card {
       flex-basis: 100%;
       height: 100%;
-      padding: 10px;
+      padding: 10px 15px;
       height: 75px;
       display: flex;
       align-items: center;
@@ -194,6 +190,7 @@
       input {
         border: 1px solid #edeff5;
         height: 25px;
+        padding-left: 10px;
       }
 
       a {

@@ -131,6 +131,12 @@
 
 <style scoped lang="scss">
   .welcome {
+    margin-bottom: 3rem;
+
+    @media screen and (min-width: 480px) {
+      margin-bottom: 0;
+    }
+
     h1 {
       color: #eb4e3b;
       font-size: 50px;
@@ -160,7 +166,12 @@
     &__actions {
       display: flex;
       justify-content: space-around;
-      align-items: center
+      align-items: center;
+      flex-direction: column;
+
+      @media screen and (min-width: 480px) {
+        flex-direction: row;
+      }
     }
 
     &__actions-holder {

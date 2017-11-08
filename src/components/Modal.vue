@@ -52,7 +52,6 @@
       max-width: 600px;
       width: 100%;
       margin: 0px auto;
-      padding: 20px 30px;
       background-color: #fff;
       border-radius: 2px;
       box-shadow: 0 2px 8px rgba(0, 0, 0, .33);
@@ -93,8 +92,12 @@
       justify-content: space-around;
       align-items: center;
       flex-direction: column;
-      width: 60%;
+      width: 100%;
       height: 150px;
+
+      @media screen and (min-width: 480px) {
+        width: 60%;
+      }
     }
 
     p {
