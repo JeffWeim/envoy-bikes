@@ -96,4 +96,12 @@
   }
 </script>
 
-<style scoped></style>
+<style lanf="scss">
+  .home {
+    width: 100%;
+    max-width: 990px;
+    margin: 0 auto;
+    text-align: center;
+    display: block;
+  }
+</style>

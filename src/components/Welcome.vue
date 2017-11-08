@@ -1,6 +1,8 @@
 <template>
-  <div class="hello">
-    <h1>Schedule for {{ date }}</h1>
+  <div class="welcome">
+    <h1>ENVOY BIKES</h1>
+
+    <h2>Schedule for {{ date }}</h2>
   </div>
 </template>
 
@@ -20,6 +22,10 @@
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
+  h1 {
+    color: rgb(233, 120, 94);
+  }
+
   h1, h2 {
     font-weight: normal;
   }

@@ -1,44 +1,52 @@
 
 <template>
-  <table>
-    <tr>
-      <td>{{ time.time_text }}</td>
-    </tr>
+  <div class="time-block">
+    <div class="time-block__time">
+      <p>{{ time.time_text }}</p>
+    </div>
 
-    <tr>
-      <td v-if="time.rider_names.a && !showSpotAForm">
-        {{ time.rider_names.a }}
+    <div class="time-block__reservations">
+      <div class="time-block__card time-block__card--a" v-if="time.rider_names.a && !showSpotAForm">
+        <span class="time-block__card-letter time-block__card-letter--a">A</span>
+        <p class="time-block__card-name">{{ time.rider_names.a }}</p>
         <a href="#" @click.prevent="showSpotAForm = !showSpotAForm">Edit</a>
-      </td>
-      <td v-else>
+      </div>
+      <div class="time-block__card time-block__card--a" v-else>
+        <span class="time-block__card-letter time-block__card-letter--a">A</span>
         <span v-if="!time.rider_names.a && !showSpotAForm">
           <button @click.prevent="showSpotAForm = !showSpotAForm">Reserve Spot A</button>
         </span>
 
-        <span v-if="showSpotAForm">
-          <input type="text" name="person-a" v-model="personA"/><br>
-          <a :data-id="time.id" href="#" @click.prevent="reserveSpot($event, 'a')">Reserve</a>
-          <a href="#" @click.prevent="showSpotAForm = !showSpotAForm">Cancel</a>
+        <span class="time-block__card-input" v-if="showSpotAForm">
+          <input placeholder="Ex. John D." maxlength="21" type="text" name="person-a" v-model="time.rider_names.a"/>
+          <span>
+            <a :data-id="time.id" href="#" @click.prevent="reserveSpot($event, 'a')">Reserve</a>
+            <a href="#" @click.prevent="showSpotAForm = !showSpotAForm">Cancel</a>
+          </span>
         </span>
-      </td>
+      </div>
 
-      <td v-if="time.rider_names.b && !showSpotBForm">
-        {{ time.rider_names.b }}
+      <div class="time-block__card time-block__card--b" v-if="time.rider_names.b && !showSpotBForm">
+        <span class="time-block__card-letter time-block__card-letter--b">B</span>
+        <p class="time-block__card-name">{{ time.rider_names.b }}</p>
         <a href="#" @click.prevent="showSpotBForm = !showSpotBForm">Edit</a>
-      </td>
-      <td v-else>
+      </div>
+      <div class="time-block__card time-block__card--b" v-else>
+        <span class="time-block__card-letter time-block__card-letter--b">B</span>
         <span v-if="!time.rider_names.b && !showSpotBForm">
           <button @click.prevent="showSpotBForm = !showSpotBForm">Reserve Spot B</button>
         </span>
 
-        <span v-if="showSpotBForm">
-          <input type="text" name="person-b" v-model="personB"/><br>
-          <a :data-id="time.id" href="#" @click.prevent="reserveSpot($event, 'b')">Reserve</a>
-          <a href="#" @click.prevent="showSpotBForm = !showSpotBForm">Cancel</a>
+        <span class="time-block__card-input" v-if="showSpotBForm">
+          <input placeholder="Ex. John D." maxlength="21" type="text" name="person-b" v-model="time.rider_names.b"/>
+          <span>
+            <a :data-id="time.id" href="#" @click.prevent="reserveSpot($event, 'b')">Reserve</a>
+            <a href="#" @click.prevent="showSpotBForm = !showSpotBForm">Cancel</a>
+          </span>
         </span>
-      </td>
-    </tr>
-  </table>
+      </div>
+    </div>
+  </div>
 </template>
 
 <script>
@@ -47,6 +55,8 @@
     props: [
       'time'
     ],
+    components: {
+    },
     data() {
       return {
         personA: '',
@@ -78,13 +88,14 @@
         if (spot === 'a') {
           this.hasSpotA = true
           this.showSpotAForm = !this.showSpotAForm
-          this.daysRef.child(this.key + '/times/' + dayId + '/' + 'rider_names/' + spot).set(this.personA)
+          this.daysRef.child(this.key + '/times/' + dayId + '/' + 'rider_names/' + spot).set(this.time.rider_names.a)
+
         }
 
         if (spot === 'b') {
           this.hasSpotB = true
           this.showSpotBForm = !this.showSpotBForm
-          this.daysRef.child(this.key + '/times/' + dayId + '/' + 'rider_names/' + spot).set(this.personB)
+          this.daysRef.child(this.key + '/times/' + dayId + '/' + 'rider_names/' + spot).set(this.time.rider_names.b)
         }
 
         if (this.bothSpotsReserved) {
@@ -96,10 +107,126 @@
 </script>
 
 <style lang="scss">
-  table {
-    td {
-      min-width: 250px;
-      padding: 7px 0;
+  .time-block {
+    display: flex;
+    justify-content: flex-start;
+    align-items: flex-start;
+    flex-direction: column;
+
+    &__time {
+      font-family: 'Avenir', Helvetica, Arial, sans-serif;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+      text-align: center;
+      color: #515458;
+      font-weight: bold;
+      align-self: flex-start;
+    }
+
+    &__reservations {
+      display: flex;
+      flex-direction: row;
+      justify-content: space-around;
+      align-items: center;
+      width: 100%;
+      flex-wrap: wrap;
+
+      @media screen and (min-width: 768px) {
+        max-width: 1000px;
+      }
+    }
+
+    &__card {
+      flex-basis: 100%;
+      height: 100%;
+      padding: 10px;
+      height: 75px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      background: #fff;
+      border-radius: 10px;
+      position: relative;
+      margin-bottom: 1rem;
+
+      @media screen and (min-width: 768px) {
+        flex-basis: 45%;
+        margin-bottom: 0;
+      }
+
+      a {
+        text-decoration: none;
+        font-weight: bold;
+        text-transform: uppercase;
+        font-size: 11px;
+        margin-top: 3px;
+      }
+
+      button {
+        padding: 5px;
+        cursor: pointer;
+      }
+
+      &--a {
+        a {
+          color: #ef4f78;
+        }
+
+        button {
+          border: 1px solid #ef4f78;
+          color: #ef4f78;
+        }
+      }
+
+      &--b {
+        a {
+          color: #558de1;
+        }
+
+        button {
+          border: 1px solid #558de1;
+          color: #558de1;
+        }
+      }
+    }
+
+    &__card-name {
+      font-size: 20px;
+    }
+
+    &__card-letter {
+      border-radius: 50%;
+      font-size: 12px;
+      width: 40px;
+      height: 40px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      color: white;
+      font-family: 'Avenir', Helvetica, Arial, sans-serif;
+      position: relative;
+
+      &:after {
+        content: url('../assets/bike.svg');
+        position: absolute;
+        height: 25px;
+        width: 25px;
+        top: -20px;
+        left: 5px;
+      }
+
+      &--a {
+        background: #ef4f78;
+      }
+
+      &--b {
+        background: #558de1;
+      }
+    }
+
+    &__card-input {
+      display: flex;
+      flex-direction: column;
     }
   }
 </style>
