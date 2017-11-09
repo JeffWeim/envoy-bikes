@@ -50,14 +50,14 @@
     <modal v-if="showModal" @close="showModal = false">
       <h3 slot="header">Wait!</h3>
 
-      <p slot="body">Have you filled already filled out the waiver?</p>
+      <p slot="body">Have you already filled out the waiver?</p>
 
       <div class="modal__footer-wrapper" slot="footer">
         <button class="modal__default-button" @click="reserveSpot">Yes</button>
 
-        <a href="https://drive.google.com/open?id=1gptpjNcnKs2RnWnaRwt2rKNLX9yfmZ0eC9wOATMHJBE" target="_blank">Download Waiver</a>
+        <a href="https://drive.google.com/open?id=1gptpjNcnKs2RnWnaRwt2rKNLX9yfmZ0eC9wOATMHJBE" target="_blank">No? Download Waiver</a>
 
-        <p>(Please fill out the waiver and return to HR)</p>
+        <p>(Please fill out the waiver and return it to HR)</p>
       </div>
     </modal>
   </section>
