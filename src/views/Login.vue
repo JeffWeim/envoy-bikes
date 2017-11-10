@@ -81,7 +81,7 @@
 
       firebase.auth().getRedirectResult()
         .then(authData => {
-          if (authData !== null && authData !== undefined && authData !== 'undefined') {
+          if (authData.user !== null) {
             localStorage.setItem('token', authData.credential.accessToken)
           }
         }).catch(error => {
