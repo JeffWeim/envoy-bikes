@@ -1,17 +1,14 @@
 <template>
   <section class="home">
-
     <welcome></welcome>
-
     <TimeBlock :key="time.id" v-for="time in dayData.times" :time="time"></TimeBlock>
-
   </section>
 </template>
 
 <script>
   import Welcome from '@/components/Welcome'
   import TimeBlock from '@/components/TimeBlock'
-  import Firebase from 'firebase'
+  import firebase from 'firebase'
 
   let config = {
     apiKey: "AIzaSyBjWk3yrbx8H0vKuRm_lbMseFp8ZwqKsjo",
@@ -22,9 +19,10 @@
     messagingSenderId: "411868926692"
   }
 
-  let app = Firebase.initializeApp(config)
+  let app = firebase.initializeApp(config)
   let db = app.database()
   let daysRef = db.ref('days')
+  let userRef = db.ref('users')
 
   export default {
     name: 'HomeView',
@@ -33,7 +31,8 @@
       TimeBlock,
     },
     firebase: {
-      days: db.ref('days')
+      days: db.ref('days'),
+      users: db.ref('users')
     },
     computed: {
       dayData() {
@@ -78,7 +77,7 @@
         let emptyDayData = require('../data/day')
         emptyDayData.day = today
 
-        this.$firebaseRefs.days.orderByChild('day')
+        daysRef.orderByChild('day')
           .equalTo(today)
           .on('value', snapshot => {
             let val = snapshot.val()
@@ -94,13 +93,22 @@
               self.$store.dispatch('setDayData', val[self.key])
             }
           })
-      }
+      },
     },
     created() {
-      this.getData()
+      this.$store.dispatch('setDaysReference', daysRef)
+      this.$store.dispatch('setUsersReference', userRef)
 
-      this.$store.dispatch('setDaysReference', this.$firebaseRefs.days)
-    }
+      this.getData()
+    },
+    beforeCreate() {
+      firebase.auth().onAuthStateChanged(user => {
+        if (user) {
+          this.$store.dispatch('setUser', user)
+          // localStorage.setItem('token', user.uid)
+        }
+      })
+    },
   }
 </script>
 
@@ -112,5 +120,6 @@
     text-align: center;
     display: block;
     margin-bottom: 5rem;
+    position: relative;
   }
 </style>

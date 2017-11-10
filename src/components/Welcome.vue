@@ -1,13 +1,28 @@
 <template>
   <div class="welcome">
-    <h1>ENVOY BIKES</h1>
+
+    <div class="welcome__logo-container">
+      <img src="../assets/envoy-logo.png" alt="Envoy Logo" class="welcome__logo"/>
+
+      <img src="../assets/bike-large.svg" alt="Bike Logo" class="welcome__bike"/>
+    </div>
 
     <div class="welcome__actions">
-      <span class="welcome__actions-holder">
+      <span class="welcome__actions-holder welcome__actions-holder--desktop">
         <a class="triangle triangle--previous" v-if="additional !== 0" href="#" @click.prevent="getPrevious">Previous Day</a>
       </span>
+
       <h2>Schedule for {{ formatToday(today) }}</h2>
-      <a class="triangle triangle--next" href="#" @click.prevent="getNext">Next Day</a>
+
+      <span style="display: flex;">
+        <span class=" welcome__actions-holder--mobile">
+          <a class="triangle triangle--previous" v-if="additional !== 0" href="#" @click.prevent="getPrevious">Previous Day</a>
+        </span>
+
+        <span class="welcome__actions-holder">
+          <a class="triangle triangle--next" v-if="additional < 7" href="#" @click.prevent="getNext">Next Day</a>
+        </span>
+      </span>
     </div>
   </div>
 </template>
@@ -85,7 +100,6 @@
           .equalTo(tomorrow)
           .on('value', snapshot => {
             let val = snapshot.val()
-
             if (val) {
               this.$store.dispatch('setKey', Object.keys(snapshot.val())[0])
             }
@@ -102,8 +116,8 @@
       },
       getPrevious() {
         let currentDate = new Date(this.today)
-        let day = currentDate.getDay() + this.additional
-        let isWeekend = (day == 6) || (day == 0)
+        let prevDay = currentDate.getDay() - 1
+        let isWeekend = (prevDay == 6) || (prevDay == 0)
         let buffer1 = 1
         let buffer2 = 2
 
@@ -137,22 +151,13 @@
         this.$store.dispatch('setToday', previousDay)
         this.$store.dispatch('setPrevious', twoPreviousDays)
 
-        let emptyDayData = require('../data/day')
-        emptyDayData.day = previousDay
-
         this.daysRef.orderByChild('day')
-          .equalTo(this.previousDay)
+          .equalTo(previousDay)
           .on('value', snapshot => {
             let val = snapshot.val()
 
             if (val) {
               this.$store.dispatch('setKey', Object.keys(snapshot.val())[0])
-            }
-
-            if (!val) {
-              this.daysRef.push(emptyDayData)
-              this.$store.dispatch('setDayData', emptyDayData)
-            } else {
               self.$store.dispatch('setDayData', val[self.key])
             }
           })
@@ -211,6 +216,22 @@
     &__actions-holder {
       display: block;
       min-width: 97px;
+
+      &--desktop {
+        display: none;
+
+        @media screen and (min-width: 480px) {
+          display: block;
+        }
+      }
+
+      &--mobile {
+        display: block;
+
+        @media screen and (min-width: 480px) {
+          display: none;
+        }
+      }
     }
 
     .triangle {
@@ -237,6 +258,27 @@
           top: 3px;
         }
       }
+    }
+
+    &__logo-container {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-self: center;
+      width: 20%;
+      height: 40px;
+      margin: 2rem auto;
+      margin-top: 6rem;
+
+      @media screen and (min-width: 480px) {
+        flex-direction: row;
+      }
+    }
+
+    &__logo,
+    &__bike {
+      max-width: 100%;
+      width: 120px;
     }
   }
 </style>

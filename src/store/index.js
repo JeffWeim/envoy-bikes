@@ -4,10 +4,12 @@ import Vuex from 'vuex'
 Vue.use(Vuex)
 
 import home from './modules/home'
+import auth from './modules/auth'
 
 const store = new Vuex.Store({
   modules: {
-    home: home,
+    home,
+    auth
   },
   // strict: process.env.NODE_ENV !== 'production'
 })

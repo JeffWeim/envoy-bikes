@@ -50,7 +50,7 @@
     <modal v-if="showModal" @close="showModal = false">
       <h3 slot="header">Wait!</h3>
 
-      <p slot="body">Have you already filled out the waiver?</p>
+      <p slot="body">Have you already filled out the waiver? This is <span class="orange">required</span> by our HR department!</p>
 
       <div class="modal__footer-wrapper" slot="footer">
         <button class="modal__default-button" @click="reserveSpot">Yes</button>
@@ -271,6 +271,15 @@
       display: flex;
       flex-direction: column;
       flex-basis: 50%;
+
+      a:first-child {
+        margin-right: 15px;
+      }
+    }
+
+    .orange {
+      color: #eb4e3b;
+      font-style: italic;
     }
   }
 </style>

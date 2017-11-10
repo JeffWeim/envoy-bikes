@@ -16,6 +16,7 @@
             <div class="modal__footer">
               <slot name="footer"></slot>
             </div>
+
           </div>
         </div>
       </div>
@@ -102,6 +103,7 @@
 
     p {
       margin: 0;
+      max-width: 320px;
     }
 
     a {
