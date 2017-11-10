@@ -20,7 +20,10 @@
         <span class="time-block__card-input" v-if="showSpotAForm">
           <input placeholder="Ex. John D." maxlength="21" type="text" name="person-a" v-model="time.rider_names.a"/>
           <span>
-            <a :data-id="time.id" href="#" @click.prevent="toggleModal($event, 'a')">Reserve</a>
+
+            <a :data-id="time.id" href="#" @click="deleteSpot($event, 'a')" v-if="hasSpotA">Delete</a>
+            <a :data-id="time.id" href="#" @click.prevent="toggleModal($event, 'a')" v-else>Reserve</a>
+
             <a href="#" @click.prevent="showSpotAForm = !showSpotAForm">Cancel</a>
           </span>
         </span>
@@ -40,7 +43,10 @@
         <span class="time-block__card-input" v-if="showSpotBForm">
           <input placeholder="Ex. John D." maxlength="21" type="text" name="person-b" v-model="time.rider_names.b"/>
           <span>
-            <a :data-id="time.id" href="#" @click.prevent="toggleModal($event, 'b')">Reserve</a>
+
+            <a :data-id="time.id" href="#" @click="deleteSpot($event, 'b')" v-if="hasSpotB">Delete</a>
+            <a :data-id="time.id" href="#" @click.prevent="toggleModal($event, 'b')" v-else>Reserve</a>
+
             <a href="#" @click.prevent="showSpotBForm = !showSpotBForm">Cancel</a>
           </span>
         </span>
@@ -76,8 +82,6 @@
     },
     data() {
       return {
-        personA: '',
-        personB: '',
         hasSpotA: false,
         hasSpotB: false,
         showSpotAForm: false,
@@ -134,6 +138,21 @@
         }
 
         this.daysRef.child(this.key + '/contains_reservations/').set(true)
+      },
+      deleteSpot(e, bike) {
+        let dayId = e.srcElement.dataset.id
+
+        if (bike === 'a') {
+          this.hasSpotA = false
+          this.showSpotAForm = !this.showSpotAForm
+          this.daysRef.child(this.key + '/times/' + dayId + '/' + 'rider_names/' + bike).set('')
+        }
+
+        if (bike === 'b') {
+          this.hasSpotB = false
+          this.showSpotBForm = !this.showSpotBForm
+          this.daysRef.child(this.key + '/times/' + dayId + '/' + 'rider_names/' + bike).set('')
+        }
       },
     }
   }
