@@ -18,7 +18,7 @@
         </span>
 
         <span class="time-block__card-input" v-if="showSpotAForm">
-          <input placeholder="Ex. John D." maxlength="21" type="text" name="person-a" v-model="time.rider_names.a"/>
+          <input placeholder="Ex. John D." maxlength="21" type="text" name="person-a" v-model="usersName"/>
           <span>
 
             <a :data-id="time.id" href="#" @click="deleteSpot($event, 'a')" v-if="hasSpotA">Delete</a>
@@ -41,7 +41,7 @@
         </span>
 
         <span class="time-block__card-input" v-if="showSpotBForm">
-          <input placeholder="Ex. John D." maxlength="21" type="text" name="person-b" v-model="time.rider_names.b"/>
+          <input placeholder="Ex. John D." maxlength="21" type="text" name="person-b" v-model="usersName"/>
           <span>
 
             <a :data-id="time.id" href="#" @click="deleteSpot($event, 'b')" v-if="hasSpotB">Delete</a>
@@ -103,6 +103,9 @@
       },
       dayData() {
         return this.$store.state.home.dayData
+      },
+      usersName() {
+        return this.$store.getters.user.displayName
       }
     },
     methods: {
@@ -128,13 +131,13 @@
         if (this.bike === 'a') {
           this.hasSpotA = true
           this.showSpotAForm = !this.showSpotAForm
-          this.daysRef.child(this.key + '/times/' + dayId + '/' + 'rider_names/' + this.bike).set(this.time.rider_names.a)
+          this.daysRef.child(this.key + '/times/' + dayId + '/' + 'rider_names/' + this.bike).set(this.usersName)
         }
 
         if (this.bike === 'b') {
           this.hasSpotB = true
           this.showSpotBForm = !this.showSpotBForm
-          this.daysRef.child(this.key + '/times/' + dayId + '/' + 'rider_names/' + this.bike).set(this.time.rider_names.b)
+          this.daysRef.child(this.key + '/times/' + dayId + '/' + 'rider_names/' + this.bike).set(this.usersName)
         }
 
         this.daysRef.child(this.key + '/contains_reservations/').set(true)
