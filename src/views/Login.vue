@@ -81,7 +81,7 @@
 
       firebase.auth().getRedirectResult()
         .then(authData => {
-          if (authData !== null) {
+          if (authData !== null && authData !== undefined && authData !== 'undefined') {
             localStorage.setItem('token', authData.credential.accessToken)
           }
         }).catch(error => {
@@ -98,6 +98,12 @@
 
 <style lang="scss" scoped>
   .signup {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    height: 100%;
+    justify-content: center;
+
     &__google {
       cursor: pointer;
       transform: translateY(0);
