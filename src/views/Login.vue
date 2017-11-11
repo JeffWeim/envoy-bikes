@@ -20,8 +20,10 @@
     </div>
 
     <div v-if="!user && !loading">
-      <p class="signup__directions">Please Sign in using your <br> <span class="orange"><span style="font-style: normal;">username@</span>weareenvoy.com</span> account</p>
+      <p class="signup__directions">Please Sign in using your <br> <span class="orange">username@weareenvoy.com</span> account</p>
       <img class="signup__google" src="../assets/google_signin.png" alt="Google Sign In Button" @click="signInWithGoogle"/>
+
+      <p class="signup__error--disabled" v-if="showError">We're sorry, your account has been disabled</p>
     </div>
 
   </section>
@@ -37,6 +39,7 @@
       return {
         loading: true,
         user: null,
+        showError: false
       }
     },
     methods: {
@@ -46,7 +49,7 @@
         provider.setCustomParameters({
           login_hint: 'user_name@weareenvoy.com',
           prompt: 'select_account',
-          hd: "weareenvoy.com"
+          hd: 'weareenvoy.com'
         })
 
         firebase.auth().signInWithRedirect(provider)
@@ -85,6 +88,9 @@
             localStorage.setItem('token', authData.credential.accessToken)
           }
         }).catch(error => {
+          if (error && error.code === 'auth/internal-error') {
+            this.showError = true
+          }
           console.log(error)
         })
     },
@@ -120,37 +126,53 @@
       display: flex;
       flex-direction: column;
       justify-content: center;
-      align-self: center;
-      width: 20%;
+      align-items: center;
+      width: 100%;
+      max-width: 200px;
       height: 40px;
       margin: 0 auto;
 
       @media screen and (min-width: 480px) {
         flex-direction: row;
+        justify-content: space-between;
       }
     }
 
     &__logo {
       margin-bottom: 1rem;
+      width: 120px;
 
       @media screen and (min-width: 480px) {
         margin-bottom: 0;
       }
     }
 
+    &__bike {
+      width: 70px;
+    }
+
     &__logo,
     &__bike {
       max-width: 100%;
-      width: 120px;
     }
 
     &__directions {
       margin: 3rem 0;
     }
 
+    &__error {
+      &--disabled {
+        color: #eb4e3b;
+        font-weight: bold;
+        margin: 0 auto;
+        max-width: 400px;
+        width: 100%;
+        margin-top: 3rem;
+      }
+    }
+
     .orange {
       color: #eb4e3b;
-      font-style: italic;
     }
   }
 </style>

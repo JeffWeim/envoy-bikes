@@ -5,7 +5,7 @@ const home = {
     key: '',
     daysRef: {},
     today: '',
-    previous: ''
+    previous: '',
   },
   mutations: {
     SET_DAY_DATA(state, data) {

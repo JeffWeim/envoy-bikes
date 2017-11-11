@@ -36,7 +36,7 @@
     },
     computed: {
       dayData() {
-        return this.$store.state.home.dayData
+        return this.$store.getters.dayData
       },
       key() {
         return this.$store.getters.key
@@ -98,14 +98,12 @@
     created() {
       this.$store.dispatch('setDaysReference', daysRef)
       this.$store.dispatch('setUsersReference', userRef)
-
       this.getData()
     },
     beforeCreate() {
       firebase.auth().onAuthStateChanged(user => {
         if (user) {
           this.$store.dispatch('setUser', user)
-          // localStorage.setItem('token', user.uid)
         }
       })
     },

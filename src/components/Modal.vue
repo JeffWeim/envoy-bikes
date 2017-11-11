@@ -5,6 +5,10 @@
         <div class="modal__wrapper">
           <div class="modal__container">
 
+            <div class="modal__close-wrapper">
+              <slot name="close"></slot>
+            </div>
+
             <div class="modal__header">
               <slot name="header"></slot>
             </div>
@@ -26,7 +30,7 @@
 
 <script>
   export default {
-    name: 'Modal'
+    name: 'Modal',
   }
 </script>
 
@@ -64,6 +68,7 @@
       flex-direction: column;
       justify-content: center;
       align-items: center;
+      position: relative;
     }
 
     &__header  {
@@ -121,6 +126,45 @@
       font-size: 15px;
       border: 1px solid #eb4e3b;
       color: #eb4e3b;
+    }
+
+    &__close {
+      position: absolute;
+      right: 0;
+      z-index: 999;
+      top: 1rem;
+      width: 25px;
+      height: 25px;
+      padding: 0 1rem 0 1.5rem;
+      border: none  !important;
+
+      &:hover {
+        &:after,
+        &:before {
+          background: #eb4e3b;
+        }
+      }
+
+      &:after,
+      &:before {
+        content: "";
+        position: absolute;
+        top: 18px;
+        left: 9px;
+        width: 2px;
+        height: 22px;
+        margin-top: -12px;
+        background: #eb4e3b;
+        transform: rotate(45deg);
+        transition: background 250ms ease;
+      }
+
+      &:after {
+        left: 0;
+        width: 22px;
+        height: 2px;
+        margin-top: -2px;
+      }
     }
 
     /*
