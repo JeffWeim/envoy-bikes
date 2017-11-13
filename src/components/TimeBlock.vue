@@ -7,23 +7,24 @@
 
     <div class="time-block__reservations" :class="{ disabled: isDisabled }">
       <!-- Card A -->
-      <div class="time-block__card time-block__card--a" v-if="time.rider_names.a && !showSpotAForm">
+      <div class="time-block__card time-block__card--a" v-if="time.rider_names.a.name && !showSpotAForm">
         <span class="time-block__card-letter time-block__card-letter--a">1</span>
-        <p class="time-block__card-name">{{ time.rider_names.a }}</p>
-        <a href="#" @click.prevent="showSpotAForm = !showSpotAForm">Edit</a>
+        <p class="time-block__card-name">{{ time.rider_names.a.name }}</p>
+        <a href="#" @click.prevent="showSpotAForm = !showSpotAForm" v-if="time.rider_names.a.uid === userUid">Edit</a>
+        <p class="time-block__card-reserved--a" v-else>Reserved</p>
       </div>
 
       <!-- Card A -->
       <div class="time-block__card time-block__card--a" v-else>
         <span class="time-block__card-letter time-block__card-letter--a">1</span>
-        <span v-if="!time.rider_names.a && !showSpotAForm">
+        <span v-if="!time.rider_names.a.name && !showSpotAForm">
           <button @click.prevent="showSpotAForm = !showSpotAForm">Reserve Bike 1</button>
         </span>
 
         <span class="time-block__card-input" v-if="showSpotAForm">
           <input placeholder="Ex. John D." maxlength="21" type="text" name="person-a" v-model="usersName"/>
           <span>
-            <a :data-id="time.id" href="#" @click.prevent="deleteSpot($event, 'a')" v-if="hasSpotA">Delete</a>
+            <a :data-id="time.id" href="#" @click.prevent="deleteSpot($event, 'a')" v-if="time.rider_names.a.name">Delete</a>
             <a :data-id="time.id" href="#" @click.prevent="toggleModal($event, 'a')" v-else>Reserve</a>
             <a href="#" @click.prevent="showSpotAForm = !showSpotAForm">Cancel</a>
           </span>
@@ -31,23 +32,24 @@
       </div>
 
       <!-- Card B -->
-      <div class="time-block__card time-block__card--b" v-if="time.rider_names.b && !showSpotBForm">
+      <div class="time-block__card time-block__card--b" v-if="time.rider_names.b.name && !showSpotBForm">
         <span class="time-block__card-letter time-block__card-letter--b">2</span>
-        <p class="time-block__card-name">{{ time.rider_names.b }}</p>
-        <a href="#" @click.prevent="showSpotBForm = !showSpotBForm">Edit</a>
+        <p class="time-block__card-name">{{ time.rider_names.b.name }}</p>
+        <a href="#" @click.prevent="showSpotBForm = !showSpotBForm" v-if="time.rider_names.b.uid === userUid">Edit</a>
+        <p class="time-block__card-reserved--b" v-else>Reserved</p>
       </div>
 
       <!-- Card B -->
       <div class="time-block__card time-block__card--b" v-else>
         <span class="time-block__card-letter time-block__card-letter--b">2</span>
-        <span v-if="!time.rider_names.b && !showSpotBForm">
+        <span v-if="!time.rider_names.b.name && !showSpotBForm">
           <button @click.prevent="showSpotBForm = !showSpotBForm">Reserve Bike 2</button>
         </span>
 
         <span class="time-block__card-input" v-if="showSpotBForm">
           <input placeholder="Ex. John D." maxlength="21" type="text" name="person-b" v-model="usersName"/>
           <span>
-            <a :data-id="time.id" href="#" @click.prevent="deleteSpot($event, 'b')" v-if="hasSpotB">Delete</a>
+            <a :data-id="time.id" href="#" @click.prevent="deleteSpot($event, 'b')" v-if="time.rider_names.b.name">Delete</a>
             <a :data-id="time.id" href="#" @click.prevent="toggleModal($event, 'b')" v-else>Reserve</a>
             <a href="#" @click.prevent="showSpotBForm = !showSpotBForm">Cancel</a>
           </span>
@@ -87,13 +89,12 @@
     },
     data() {
       return {
-        hasSpotA: false,
-        hasSpotB: false,
         showSpotAForm: false,
         showSpotBForm: false,
         showModal: false,
         bike: '',
         event: undefined,
+        userUid: this.$store.getters.user.uid,
         usersName: this.$store.getters.user.displayName
       }
     },
@@ -144,37 +145,35 @@
           this.showModal = !this.showModal
         }
 
-        let dayId = this.event.srcElement.dataset.id
+        let timeBlockId = this.event.srcElement.dataset.id
         localStorage.setItem('signedWaiver', true)
 
         if (this.bike === 'a') {
-          this.hasSpotA = true
-          this.showSpotAForm = false
-          this.daysRef.child(`${this.key}/times/${dayId}/rider_names/${this.bike}`).set(this.usersName)
+          this.daysRef.child(`${this.key}/times/${timeBlockId}/rider_names/${this.bike}/name`).set(this.usersName)
+          this.daysRef.child(`${this.key}/times/${timeBlockId}/rider_names/${this.bike}/uid`).set(this.userUid)
         }
 
         if (this.bike === 'b') {
-          this.hasSpotB = true
           this.showSpotBForm = false
-          this.daysRef.child(`${this.key}/times/${dayId}/rider_names/${this.bike}`).set(this.usersName)
+          this.daysRef.child(`${this.key}/times/${timeBlockId}/rider_names/${this.bike}/name`).set(this.usersName)
+          this.daysRef.child(`${this.key}/times/${timeBlockId}/rider_names/${this.bike}/uid`).set(this.userUid)
         }
 
         this.daysRef.child(`${this.key}/contains_reservations/`).set(true)
       },
       deleteSpot(e, bike) {
-        let dayId = e.srcElement.dataset.id
+        let timeBlockId = e.srcElement.dataset.id
         this.usersName = ''
 
         if (bike === 'a') {
-          this.hasSpotA = false
-          this.showSpotAForm = false
-          this.daysRef.child(`${this.key}/times/${dayId}/rider_names/${bike}`).set('')
+          this.daysRef.child(`${this.key}/times/${timeBlockId}/rider_names/${bike}/name`).set('')
+          this.daysRef.child(`${this.key}/times/${timeBlockId}/rider_names/${bike}/uid`).set('')
         }
 
         if (bike === 'b') {
-          this.hasSpotB = false
           this.showSpotBForm = false
-          this.daysRef.child(`${this.key}/times/${dayId}/rider_names/${bike}`).set('')
+          this.daysRef.child(`${this.key}/times/${timeBlockId}/rider_names/${bike}/name`).set('')
+          this.daysRef.child(`${this.key}/times/${timeBlockId}/rider_names/${bike}/uid`).set('')
         }
       },
     },
@@ -187,6 +186,9 @@
           this.showSpotBForm = false
         }
       }
+    },
+    creatd() {
+      this.usersName
     }
   }
 </script>
@@ -336,6 +338,16 @@
 
       a:first-child {
         margin-right: 15px;
+      }
+    }
+
+    &__card-reserved {
+      &--a {
+        color: #ef4f78;
+      }
+
+      &--b {
+        color: #558de1
       }
     }
 

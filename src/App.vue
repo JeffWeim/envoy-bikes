@@ -33,7 +33,7 @@
 
   body,
   html {
-    background: #edeff5;
+    background: #f2f2f2;
     height: 100%;
   }
 </style>

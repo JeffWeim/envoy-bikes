@@ -8,32 +8,81 @@
     </div>
 
     <div class="welcome__actions">
-      <span class="welcome__actions-holder welcome__actions-holder--desktop">
-        <a class="triangle triangle--previous" v-if="additional !== 0" href="#" @click.prevent="getPrevious">Previous Day</a>
-      </span>
+      <!-- <span class="welcome__actions-holder welcome__actions-holder--desktop">
+        <a class="triangle triangle--previous"
+             href="#"
+             v-for="(day, index) in datePickerDays"
+             v-if="day.isSelected && !day.isDisabled"
+             :key="day.timestamp"
+             @click.prevent="getPrevious(datePickerDays[index])">Previous Day</a>
+      </span> -->
 
       <h2>Schedule for {{ formatToday(today) }}</h2>
 
-      <span style="display: flex;">
+      <!-- <span style="display: flex;">
         <span class=" welcome__actions-holder--mobile">
-          <a class="triangle triangle--previous" v-if="additional !== 0" href="#" @click.prevent="getPrevious">Previous Day</a>
+          <a class="triangle triangle--previous"
+             href="#"
+             v-for="(day, index) in datePickerDays"
+             v-if="day.isSelected && !day.isDisabled"
+             :key="day.timestamp"
+             @click.prevent="getPrevious(datePickerDays[index - 1])">Previous Day</a>
         </span>
 
         <span class="welcome__actions-holder">
-          <a class="triangle triangle--next" v-if="additional < 7" href="#" @click.prevent="getNext">Next Day</a>
+          <a class="triangle triangle--next"
+             href="#"
+             v-for="(day, index) in datePickerDays"
+             v-if="day.isSelected && !day.isDisabled"
+             :key="day.timestamp"
+             @click.prevent="getNext(datePickerDays[index + 1])">Next Day</a>
         </span>
-      </span>
+      </span> -->
     </div>
+
+    <br><br>
+
+    <datepicker :inline="true" :value="date" full-month-name="true" v-on:selected="getDate" :disabled="disabled" placeholder="Pick A Day In The Next Week..." input-class="welcome__datepicker" id="welcome__datepicker"></datepicker>
   </div>
 </template>
 
 <script>
+  import Datepicker from 'vuejs-datepicker';
+
+  let d = new Date()
+  let yesterday = new Date(d.setDate(d.getDate()))
+  let weekFromNow = new Date(d.setDate(d.getDate() + 7))
+
+  let currentDate = new Date()
+  let year = currentDate.getFullYear()
+  let month = currentDate.getMonth() + 1
+  let day = currentDate.getDay()
+  let date = currentDate.getDate()
+
+  if (day === 6) {
+    date += 2
+  }
+
+  if (day === 0) {
+    date += 1
+  }
+
+  let todaysDate = new Date(`${month}-${date}-${year}`)
+
   export default {
     name: 'Welcome',
+    components: {
+      Datepicker
+    },
     data () {
       return {
         msg: '',
-        additional: 0
+        date: todaysDate,
+        disabled: {
+          to: yesterday,
+          from: weekFromNow,
+          days: [6, 0]
+        }
       }
     },
     computed: {
@@ -45,12 +94,50 @@
       },
       key() {
         return this.$store.getters.key
-      },
-      previousDay() {
-        return this.$store.getters.previous
       }
     },
     methods: {
+      getDate(selectedDate) {
+        let self = this
+        let currentDate = new Date(selectedDate)
+        let year = currentDate.getFullYear()
+        let month = currentDate.getMonth() + 1
+        let day = currentDate.getDate()
+
+        let isWeekend = (day == 6) || (day == 0)
+
+        if (isWeekend) {
+          day += 2
+        }
+
+        if (day < 10) {
+          day = `0${day}`
+        }
+
+        let newDay = `${month}/${day}/${year}`
+
+        this.$store.dispatch('setToday', newDay)
+        this.date = new Date(selectedDate)
+
+        let emptyDayData = require('../data/day')
+        emptyDayData.day = newDay
+
+        this.daysRef.orderByChild('day')
+          .equalTo(newDay)
+          .on('value', snapshot => {
+            let val = snapshot.val()
+            if (val) {
+              self.$store.dispatch('setKey', Object.keys(snapshot.val())[0])
+            }
+
+            if (!val) {
+              self.daysRef.push(emptyDayData)
+              self.$store.dispatch('setDayData', emptyDayData)
+            } else {
+              self.$store.dispatch('setDayData', val[self.key])
+            }
+          })
+      },
       formatToday(val) {
         let days = ['Sunday','Monday','Tuesday','Wednesday','Thursday','Friday','Saturday']
         let months = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December']
@@ -66,109 +153,14 @@
         }
 
         return `${days[day]}, ${months[month]} ${dayNumeric}th`
-      },
-      getNext() {
-        let currentDate = new Date(new Date().getTime() + 24 * 60 * 60 * 1000)
-        let day = currentDate.getDay() + this.additional
-        let isWeekend = (day == 6) || (day == 0)
-
-        if (isWeekend) {
-          this.additional += 2
-        }
-
-        this.$store.dispatch('setPrevious', this.today)
-        let self = this
-        let dd = currentDate.getDate() + this.additional
-        let mm = currentDate.getMonth() + 1
-        let yyyy = currentDate.getFullYear()
-
-        if (dd < 10) {
-          dd = `0${dd}`
-        }
-
-        if (mm < 10) {
-          mm = `0${mm}`
-        }
-
-        let tomorrow = `${mm}/${dd}/${yyyy}`
-        let emptyDayData = require('../data/day')
-        emptyDayData.day = tomorrow
-
-        this.$store.dispatch('setToday', tomorrow)
-
-        this.daysRef.orderByChild('day')
-          .equalTo(tomorrow)
-          .on('value', snapshot => {
-            let val = snapshot.val()
-            if (val) {
-              this.$store.dispatch('setKey', Object.keys(snapshot.val())[0])
-            }
-
-            if (!val) {
-              this.daysRef.push(emptyDayData)
-              this.$store.dispatch('setDayData', emptyDayData)
-            } else {
-              self.$store.dispatch('setDayData', val[self.key])
-            }
-          })
-
-        this.additional += 1
-      },
-      getPrevious() {
-        let currentDate = new Date(this.today)
-        let prevDay = currentDate.getDay() - 1
-        let isWeekend = (prevDay == 6) || (prevDay == 0)
-        let buffer1 = 1
-        let buffer2 = 2
-
-        if (isWeekend) {
-          buffer1 += 2
-          buffer2 += 2
-          this.additional -= 2
-        }
-
-        let self = this
-        let dd = currentDate.getDate() - buffer1
-        let ddTwoPrevious = currentDate.getDate() - buffer2
-        let mm = currentDate.getMonth() + 1
-        let yyyy = currentDate.getFullYear()
-
-        if (dd < 10) {
-          dd = `0${dd}`
-        }
-
-        if (ddTwoPrevious < 10) {
-          ddTwoPrevious = `0${ddTwoPrevious}`
-        }
-
-        if (mm < 10) {
-          mm = `0${mm}`
-        }
-
-        let previousDay = `${mm}/${dd}/${yyyy}`
-        let twoPreviousDays = `${mm}/${ddTwoPrevious}/${yyyy}`
-
-        this.$store.dispatch('setToday', previousDay)
-        this.$store.dispatch('setPrevious', twoPreviousDays)
-
-        this.daysRef.orderByChild('day')
-          .equalTo(previousDay)
-          .on('value', snapshot => {
-            let val = snapshot.val()
-
-            if (val) {
-              this.$store.dispatch('setKey', Object.keys(snapshot.val())[0])
-              self.$store.dispatch('setDayData', val[self.key])
-            }
-          })
-
-        this.additional -= 1
       }
-    }
+    },
   }
 </script>
 
-<style scoped lang="scss">
+<style lang="scss">
+  @import '../styles/main';
+
   .welcome {
     margin-bottom: 3rem;
 
@@ -183,16 +175,6 @@
 
     h1, h2 {
       font-weight: normal;
-    }
-
-    ul {
-      list-style-type: none;
-      padding: 0;
-    }
-
-    li {
-      display: inline-block;
-      margin: 0 10px;
     }
 
     a {
@@ -210,6 +192,10 @@
 
       @media screen and (min-width: 480px) {
         flex-direction: row;
+      }
+
+      h2 {
+        margin-bottom: 0;
       }
     }
 
@@ -270,8 +256,16 @@
       margin: 2rem auto;
       margin-top: 6rem;
 
+      img:first-child {
+        margin-bottom: 1rem;
+      }
+
       @media screen and (min-width: 480px) {
         flex-direction: row;
+
+        img:first-child {
+          margin-bottom: 0;
+        }
       }
     }
 

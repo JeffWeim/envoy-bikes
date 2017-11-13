@@ -47,30 +47,23 @@
     },
     methods: {
       getData() {
-        let today = new Date()
-        var day = today.getDay();
-        var isWeekend = (day == 6) || (day == 0);
-        let dd
-
-        if (isWeekend) {
-          dd = today.getDate() + 2
-        } else {
-          dd = today.getDate()
-        }
-
         let self = this
-        let mm = today.getMonth() + 1
-        let yyyy = today.getFullYear()
+        let currentDate = new Date()
+        let year = currentDate.getFullYear()
+        let month = currentDate.getMonth() + 1
+        let day = currentDate.getDay()
+        let date = currentDate.getDate()
 
-        if (dd < 10) {
-          dd = `0${dd}`
+        if (day === 6) {
+          date += 2
         }
 
-        if (mm < 10) {
-          mm = `0${mm}`
+        if (day === 0) {
+          date += 1
         }
 
-        today = `${mm}/${dd}/${yyyy}`
+        let today = `${month}-${date}-${year}`
+
         this.$store.dispatch('setToday', today)
         this.$store.dispatch('setPrevious', today)
 
@@ -83,12 +76,12 @@
             let val = snapshot.val()
 
             if (val) {
-              this.$store.dispatch('setKey', Object.keys(snapshot.val())[0])
+              self.$store.dispatch('setKey', Object.keys(snapshot.val())[0])
             }
 
             if (!val) {
               daysRef.push(emptyDayData)
-              this.$store.dispatch('setDayData', emptyDayData)
+              self.$store.dispatch('setDayData', emptyDayData)
             } else {
               self.$store.dispatch('setDayData', val[self.key])
             }

@@ -129,7 +129,7 @@
       align-items: center;
       width: 100%;
       max-width: 200px;
-      height: 40px;
+      height: auto;
       margin: 0 auto;
 
       @media screen and (min-width: 480px) {

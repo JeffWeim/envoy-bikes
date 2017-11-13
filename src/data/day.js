@@ -8,8 +8,14 @@ module.exports = {
       "hour_end": 9,
       "minutes_end": 30,
       "rider_names": {
-        "a": "",
-        "b": ""
+        "a": {
+          "name": "",
+          "uid": ""
+        },
+        "b": {
+          "name": "",
+          "uid": ""
+        }
       },
     },
     {
@@ -18,8 +24,14 @@ module.exports = {
       "hour_end": 10,
       "minutes_end": 0,
       "rider_names": {
-        "a": "",
-        "b": ""
+        "a": {
+          "name": "",
+          "uid": ""
+        },
+        "b": {
+          "name": "",
+          "uid": ""
+        }
       },
     },
     {
@@ -28,8 +40,14 @@ module.exports = {
       "hour_end": 10,
       "minutes_end": 30,
       "rider_names": {
-        "a": "",
-        "b": ""
+        "a": {
+          "name": "",
+          "uid": ""
+        },
+        "b": {
+          "name": "",
+          "uid": ""
+        }
       },
     },
     {
@@ -38,8 +56,14 @@ module.exports = {
       "hour_end": 11,
       "minutes_end": 0,
       "rider_names": {
-        "a": "",
-        "b": ""
+        "a": {
+          "name": "",
+          "uid": ""
+        },
+        "b": {
+          "name": "",
+          "uid": ""
+        }
       },
     },
     {
@@ -48,8 +72,14 @@ module.exports = {
       "hour_end": 11,
       "minutes_end": 30,
       "rider_names": {
-        "a": "",
-        "b": ""
+        "a": {
+          "name": "",
+          "uid": ""
+        },
+        "b": {
+          "name": "",
+          "uid": ""
+        }
       },
     },
     {
@@ -58,8 +88,14 @@ module.exports = {
       "hour_end": 12,
       "minutes_end": 0,
       "rider_names": {
-        "a": "",
-        "b": ""
+        "a": {
+          "name": "",
+          "uid": ""
+        },
+        "b": {
+          "name": "",
+          "uid": ""
+        }
       },
     },
     {
@@ -68,8 +104,14 @@ module.exports = {
       "hour_end": 12,
       "minutes_end": 30,
       "rider_names": {
-        "a": "",
-        "b": ""
+        "a": {
+          "name": "",
+          "uid": ""
+        },
+        "b": {
+          "name": "",
+          "uid": ""
+        }
       },
     },
     {
@@ -78,8 +120,14 @@ module.exports = {
       "hour_end": 13,
       "minutes_end": 0,
       "rider_names": {
-        "a": "",
-        "b": ""
+        "a": {
+          "name": "",
+          "uid": ""
+        },
+        "b": {
+          "name": "",
+          "uid": ""
+        }
       },
     },
     {
@@ -88,8 +136,14 @@ module.exports = {
       "hour_end": 13,
       "minutes_end": 30,
       "rider_names": {
-        "a": "",
-        "b": ""
+        "a": {
+          "name": "",
+          "uid": ""
+        },
+        "b": {
+          "name": "",
+          "uid": ""
+        }
       },
     },
     {
@@ -98,8 +152,14 @@ module.exports = {
       "hour_end": 14,
       "minutes_end": 0,
       "rider_names": {
-        "a": "",
-        "b": ""
+        "a": {
+          "name": "",
+          "uid": ""
+        },
+        "b": {
+          "name": "",
+          "uid": ""
+        }
       },
     },
     {
@@ -108,8 +168,14 @@ module.exports = {
       "hour_end": 14,
       "minutes_end": 30,
       "rider_names": {
-        "a": "",
-        "b": ""
+        "a": {
+          "name": "",
+          "uid": ""
+        },
+        "b": {
+          "name": "",
+          "uid": ""
+        }
       },
     },
     {
@@ -118,8 +184,14 @@ module.exports = {
       "hour_end": 15,
       "minutes_end": 0,
       "rider_names": {
-        "a": "",
-        "b": ""
+        "a": {
+          "name": "",
+          "uid": ""
+        },
+        "b": {
+          "name": "",
+          "uid": ""
+        }
       },
     },
     {
@@ -128,8 +200,14 @@ module.exports = {
       "hour_end": 15,
       "minutes_end": 30,
       "rider_names": {
-        "a": "",
-        "b": ""
+        "a": {
+          "name": "",
+          "uid": ""
+        },
+        "b": {
+          "name": "",
+          "uid": ""
+        }
       },
     },
     {
@@ -138,8 +216,14 @@ module.exports = {
       "hour_end": 16,
       "minutes_end": 0,
       "rider_names": {
-        "a": "",
-        "b": ""
+        "a": {
+          "name": "",
+          "uid": ""
+        },
+        "b": {
+          "name": "",
+          "uid": ""
+        }
       },
     },
     {
@@ -148,8 +232,14 @@ module.exports = {
       "hour_end": 16,
       "minutes_end": 30,
       "rider_names": {
-        "a": "",
-        "b": ""
+        "a": {
+          "name": "",
+          "uid": ""
+        },
+        "b": {
+          "name": "",
+          "uid": ""
+        }
       },
     },
     {
@@ -158,8 +248,14 @@ module.exports = {
       "hour_end": 17,
       "minutes_end": 0,
       "rider_names": {
-        "a": "",
-        "b": ""
+        "a": {
+          "name": "",
+          "uid": ""
+        },
+        "b": {
+          "name": "",
+          "uid": ""
+        }
       },
     }
   ]
