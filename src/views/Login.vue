@@ -87,7 +87,8 @@
           if (authData.user !== null) {
             localStorage.setItem('token', authData.credential.accessToken)
           }
-        }).catch(error => {
+        })
+        .catch(error => {
           if (error && error.code === 'auth/internal-error') {
             this.showError = true
           }

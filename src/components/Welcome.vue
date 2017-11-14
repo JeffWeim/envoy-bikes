@@ -79,7 +79,7 @@
         msg: '',
         date: todaysDate,
         disabled: {
-          to: yesterday,
+          to: todaysDate,
           from: weekFromNow,
           days: [6, 0]
         }
