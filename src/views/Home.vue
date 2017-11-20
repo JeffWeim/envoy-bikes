@@ -62,7 +62,7 @@
           date += 1
         }
 
-        let today = `${month}-${date}-${year}`
+        let today = `${month}/${date}/${year}`
 
         this.$store.dispatch('setToday', today)
         this.$store.dispatch('setPrevious', today)
