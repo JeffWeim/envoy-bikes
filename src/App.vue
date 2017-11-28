@@ -38,6 +38,7 @@
 
     &__wrapper {
       width: 100%;
+      height: 100%;
       max-width: 90%;
       margin: 0 auto;
     }

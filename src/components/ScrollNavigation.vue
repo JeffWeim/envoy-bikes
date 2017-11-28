@@ -27,6 +27,10 @@
     },
     computed: {
       user() {
+        if (!this.$store.getters.user) {
+          return {}
+        }
+
         return this.$store.getters.user
       },
       todayString() {
@@ -48,17 +52,20 @@
     },
     mounted() {
       let datePicker = document.querySelector('.vdp-datepicker')
-      let datePickerTop = datePicker.getBoundingClientRect().top
 
-      window.addEventListener('scroll', debounce(() => {
-        let scrollTop = window.scrollY || window.screenY
+      if (datePicker) {
+        let datePickerTop = datePicker.getBoundingClientRect().top
 
-        if (scrollTop >= datePickerTop) {
-          this.showScrollNav = true
-        } else {
-          this.showScrollNav = false
-        }
-      }, 25))
+        window.addEventListener('scroll', debounce(() => {
+          let scrollTop = window.scrollY || window.screenY
+
+          if (scrollTop >= datePickerTop) {
+            this.showScrollNav = true
+          } else {
+            this.showScrollNav = false
+          }
+        }, 25))
+      }
     }
   }
 </script>
