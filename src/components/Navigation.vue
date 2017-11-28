@@ -12,7 +12,7 @@
 </template>
 
 <script>
-import firebase from 'firebase'
+  import firebase from 'firebase'
 
   export default {
     name: 'Navigation',
@@ -27,7 +27,7 @@ import firebase from 'firebase'
           .then(() => {
             this.$store.dispatch('setUser', null)
             localStorage.removeItem('token')
-            this.$router.go('/envot-bikes/login')
+            this.$router.go('/envoy-bikes/login')
           })
           .catch(error => {
             console.log(error)

@@ -13,10 +13,6 @@
     <div v-if="user">
       <img :src="user.photoURL" alt="avatar" style="width: 30px; height: 30px; border-radius: 50%;"/>
       <button @click="signOut">Sign Out</button>
-
-      <router-link to="/envoy-bikes">
-        Home
-      </router-link>
     </div>
 
     <div v-if="!user && !loading">
@@ -177,4 +173,3 @@
     }
   }
 </style>
-

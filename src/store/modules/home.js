@@ -5,6 +5,7 @@ const home = {
     key: '',
     daysRef: {},
     today: '',
+    todayString: '',
     previous: '',
   },
   mutations: {
@@ -19,6 +20,9 @@ const home = {
     },
     SET_TODAY(state, data) {
       state.today = data
+    },
+    SET_TODAY_STRING(state, data) {
+      state.todayString = data
     },
     SET_PREVIOUS(state, data) {
       state.previous = data
@@ -37,6 +41,9 @@ const home = {
     setToday({ dispatch, commit }, data) {
       commit('SET_TODAY', data)
     },
+    setTodayString({ dispatch, commit }, data) {
+      commit('SET_TODAY_STRING', data)
+    },
     setPrevious({ dispatch, commit }, data) {
       commit('SET_PREVIOUS', data)
     },
@@ -46,6 +53,7 @@ const home = {
     key: state => state.key,
     daysRef: state => state.daysRef,
     today: state => state.today,
+    todayString: state => state.todayString,
     previous: state => state.previous,
   }
 }

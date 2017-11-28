@@ -1,17 +1,23 @@
 <template>
-  <div id="app">
+  <section class="app" id="app">
+    <ScrollNavigation></ScrollNavigation>
     <navigation></navigation>
-    <router-view></router-view>
-  </div>
+
+    <div class="app__wrapper">
+      <router-view></router-view>
+    </div>
+  </section>
 </template>
 
 <script>
   import Navigation from '@/components/Navigation'
+  import ScrollNavigation from '@/components/ScrollNavigation'
 
   export default {
     name: 'app',
     components: {
-      Navigation
+      Navigation,
+      ScrollNavigation
     },
     created() {
       if (localStorage.getItem('signedWaiver') === null) {
@@ -21,14 +27,20 @@
   }
 </script>
 
-<style>
-  #app {
+<style lang="scss">
+  .app {
     font-family: 'Avenir', Helvetica, Arial, sans-serif;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
     text-align: center;
     color: #2c3e50;
     height: 100%;
+
+    &__wrapper {
+      width: 100%;
+      max-width: 90%;
+      margin: 0 auto;
+    }
   }
 
   body,

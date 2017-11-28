@@ -147,12 +147,27 @@
         let month = today.getUTCMonth()
         let day = today.getDay()
         let dayNumeric = today.getDate()
+        let appendix
 
-        if (dayNumeric < 10) {
-          dayNumeric = `0${dayNumeric}`
+        if (dayNumeric === 1) {
+          appendix = 'st'
         }
 
-        return `${days[day]}, ${months[month]} ${dayNumeric}th`
+        if (dayNumeric === 2) {
+          appendix = 'nd'
+        }
+
+        if (dayNumeric === 3) {
+          appendix = 'rd'
+        }
+
+        if (dayNumeric >= 4) {
+          appendix = 'th'
+        }
+
+        this.$store.dispatch('setTodayString', `${days[day]}, ${months[month]} ${dayNumeric}${appendix}`)
+
+        return `${days[day]}, ${months[month]} ${dayNumeric}${appendix}`
       }
     },
   }
