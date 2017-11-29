@@ -8,7 +8,7 @@
         <p class="scroll-navigation__name">{{ user.displayName }}</p>
       </span>
 
-      <p class="scroll-navigation__date">Date Selected: <span class="bold">{{ todayString }}</span></p>
+      <p class="scroll-navigation__date"><span class="orange">Date Selected:</span> <span class="bold">{{ todayString }}</span></p>
     </div>
   </section>
 </template>
@@ -50,9 +50,10 @@
           })
       },
     },
-    mounted() {
+    updated() {
       let datePicker = document.querySelector('.vdp-datepicker')
 
+      // debugger
       if (datePicker) {
         let datePickerTop = datePicker.getBoundingClientRect().top
 
@@ -108,15 +109,15 @@
       display: flex;
       flex-direction: row;
       align-items: center;
-      justify-content: space-around;
+      justify-content: space-between;
       width: 100%;
-      max-width: 100%;
+      max-width: 90%;
       margin: 0 auto;
       text-align: center;
       min-height: 50px;
 
-      @media screen and (min-width: 480px) {
-        max-width: 90%;
+      @media screen and (min-width: 990px) {
+        max-width: 990px;
       }
     }
 
@@ -133,6 +134,10 @@
 
     .bold {
       font-weight: bold;
+    }
+
+    .orange {
+      color: #eb4e3b;
     }
   }
 </style>

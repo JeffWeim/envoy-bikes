@@ -149,20 +149,20 @@
         let dayNumeric = today.getDate()
         let appendix
 
-        if (dayNumeric === 1) {
+        if (dayNumeric >= 4) {
+          appendix = 'th'
+        }
+
+        if (dayNumeric === 1 || dayNumeric === 21 || dayNumeric === 31) {
           appendix = 'st'
         }
 
-        if (dayNumeric === 2) {
+        if (dayNumeric === 2 || dayNumeric === 22) {
           appendix = 'nd'
         }
 
-        if (dayNumeric === 3) {
+        if (dayNumeric === 3 || dayNumeric === 23) {
           appendix = 'rd'
-        }
-
-        if (dayNumeric >= 4) {
-          appendix = 'th'
         }
 
         this.$store.dispatch('setTodayString', `${days[day]}, ${months[month]} ${dayNumeric}${appendix}`)

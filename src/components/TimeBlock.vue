@@ -61,7 +61,7 @@
     <modal v-if="showModal" @close="showModal = false">
       <h3 slot="header">Wait!</h3>
 
-      <a slot="close" href="#" class="modal__close" @click="showModal = false"></a>
+      <a slot="close" href="#" class="modal__close" @click.prevent="showModal = false"></a>
 
       <p slot="body">Have you already filled out the waiver? This is <span class="orange">required</span> by our HR department!</p>
 
