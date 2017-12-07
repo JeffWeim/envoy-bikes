@@ -8,41 +8,12 @@
     </div>
 
     <div class="welcome__actions">
-      <!-- <span class="welcome__actions-holder welcome__actions-holder--desktop">
-        <a class="triangle triangle--previous"
-             href="#"
-             v-for="(day, index) in datePickerDays"
-             v-if="day.isSelected && !day.isDisabled"
-             :key="day.timestamp"
-             @click.prevent="getPrevious(datePickerDays[index])">Previous Day</a>
-      </span> -->
-
       <h2>Schedule for {{ formatToday(today) }}</h2>
-
-      <!-- <span style="display: flex;">
-        <span class=" welcome__actions-holder--mobile">
-          <a class="triangle triangle--previous"
-             href="#"
-             v-for="(day, index) in datePickerDays"
-             v-if="day.isSelected && !day.isDisabled"
-             :key="day.timestamp"
-             @click.prevent="getPrevious(datePickerDays[index - 1])">Previous Day</a>
-        </span>
-
-        <span class="welcome__actions-holder">
-          <a class="triangle triangle--next"
-             href="#"
-             v-for="(day, index) in datePickerDays"
-             v-if="day.isSelected && !day.isDisabled"
-             :key="day.timestamp"
-             @click.prevent="getNext(datePickerDays[index + 1])">Next Day</a>
-        </span>
-      </span> -->
     </div>
 
     <br><br>
 
-    <datepicker :inline="true" :value="date" full-month-name="true" v-on:selected="getDate" :disabled="disabled" placeholder="Pick A Day In The Next Week..." input-class="welcome__datepicker" id="welcome__datepicker"></datepicker>
+    <datepicker :inline="true" :value="date" full-month-name="true" v-on:selected="dateSelected" :disabled="disabled" placeholder="Pick A Day In The Next Week..." input-class="welcome__datepicker" id="welcome__datepicker"></datepicker>
   </div>
 </template>
 
@@ -97,22 +68,12 @@
       }
     },
     methods: {
-      getDate(selectedDate) {
+      dateSelected(selectedDate) {
         let self = this
         let currentDate = new Date(selectedDate)
         let year = currentDate.getFullYear()
         let month = currentDate.getMonth() + 1
         let day = currentDate.getDate()
-
-        let isWeekend = (day == 6) || (day == 0)
-
-        if (isWeekend) {
-          day += 2
-        }
-
-        if (day < 10) {
-          day = `0${day}`
-        }
 
         let newDay = `${month}/${day}/${year}`
 
@@ -211,53 +172,6 @@
 
       h2 {
         margin-bottom: 0;
-      }
-    }
-
-    &__actions-holder {
-      display: block;
-      min-width: 97px;
-
-      &--desktop {
-        display: none;
-
-        @media screen and (min-width: 480px) {
-          display: block;
-        }
-      }
-
-      &--mobile {
-        display: block;
-
-        @media screen and (min-width: 480px) {
-          display: none;
-        }
-      }
-    }
-
-    .triangle {
-      &--previous {
-        &:after {
-          content: '';
-          position: absolute;
-          border-right: solid 8px #eb4e3b;
-          border-bottom: solid 8px transparent;
-          border-top: solid 8px transparent;
-          left: -20px;
-          top: 3px;
-        }
-      }
-
-      &--next {
-        &:after {
-          content: '';
-          position: absolute;
-          border-left: solid 8px #eb4e3b;
-          border-bottom: solid 8px transparent;
-          border-top: solid 8px transparent;
-          right: -20px;
-          top: 3px;
-        }
       }
     }
 

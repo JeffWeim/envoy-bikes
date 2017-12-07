@@ -43,7 +43,7 @@
         const provider = new firebase.auth.GoogleAuthProvider()
 
         provider.setCustomParameters({
-          login_hint: 'user_name@weareenvoy.com',
+          login_hint: 'username@weareenvoy.com',
           prompt: 'select_account',
           hd: 'weareenvoy.com'
         })

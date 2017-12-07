@@ -53,7 +53,6 @@
     updated() {
       let datePicker = document.querySelector('.vdp-datepicker')
 
-      // debugger
       if (datePicker) {
         let datePickerTop = datePicker.getBoundingClientRect().top
 

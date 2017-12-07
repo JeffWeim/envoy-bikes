@@ -65,7 +65,6 @@
         let today = `${month}/${date}/${year}`
 
         this.$store.dispatch('setToday', today)
-        this.$store.dispatch('setPrevious', today)
 
         let emptyDayData = require('../data/day')
         emptyDayData.day = today
@@ -87,6 +86,28 @@
             }
           })
       },
+      checkSession() {
+        let user = firebase.auth().currentUser
+        let credential
+        let lastLogin = new Date(user.metadata.lastSignInTime)
+        let today = new Date()
+
+        let diff = Math.abs(lastLogin.getTime() - today.getTime())
+        let diffDays = diff / (1000 * 60 * 60 * 24)
+
+        // Automatically log people out after a week
+        if (diffDays >= 7) {
+          firebase.auth().signOut()
+            .then(() => {
+              this.$store.dispatch('setUser', null)
+              localStorage.removeItem('token')
+              this.$router.go('/envoy-bikes/login')
+            })
+            .catch(error => {
+              console.log(error)
+            })
+        }
+      }
     },
     created() {
       this.$store.dispatch('setDaysReference', daysRef)
@@ -97,6 +118,8 @@
       firebase.auth().onAuthStateChanged(user => {
         if (user) {
           this.$store.dispatch('setUser', user)
+
+          this.checkSession()
         }
       })
     },
