@@ -52,7 +52,6 @@
           .then(result => {
             this.user = result.user
             this.$store.dispatch('setUser', result.user)
-            this.$store.dispatch('setSignedIn', true)
           })
           .catch(error => {
             console.log(error)
@@ -64,7 +63,6 @@
           .then(() => {
             this.user = null
             this.$store.dispatch('setUser', null)
-            this.$store.dispatch('setSignedIn', false)
             localStorage.removeItem('token')
           })
           .catch(error => {
@@ -76,7 +74,6 @@
       firebase.auth().onAuthStateChanged(user => {
         if (user) {
           this.$store.dispatch('setUser', user)
-          this.$store.dispatch('setSignedIn', true)
         }
         this.loading = false
       })

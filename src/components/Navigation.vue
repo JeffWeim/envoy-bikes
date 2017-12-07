@@ -39,7 +39,7 @@
         return this.$store.getters.navMenu
       },
       signedIn() {
-        return this.$store.getters.signedIn
+        return this.$route.path !== '/envoy-bikes/login'
       }
     },
     methods: {
@@ -54,7 +54,6 @@
         firebase.auth().signOut()
           .then(() => {
             this.$store.dispatch('setUser', null)
-            this.$store.dispatch('setSignedIn', false)
             localStorage.removeItem('token')
             this.$router.go('/envoy-bikes/login')
           })
