@@ -1,6 +1,6 @@
 
 <template>
-  <section v-if="user" class="navigation">
+  <section v-if="signedIn" class="navigation">
     <div class="navigation__wrapper">
       <span>
         <a class="navigation__toggle" href="#" @click.prevent="toggleMenu">&#9776;</a>
@@ -37,6 +37,9 @@
       },
       navMenu() {
         return this.$store.getters.navMenu
+      },
+      signedIn() {
+        return this.$store.getters.signedIn
       }
     },
     methods: {
@@ -51,6 +54,7 @@
         firebase.auth().signOut()
           .then(() => {
             this.$store.dispatch('setUser', null)
+            this.$store.dispatch('setSignedIn', false)
             localStorage.removeItem('token')
             this.$router.go('/envoy-bikes/login')
           })

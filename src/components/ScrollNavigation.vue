@@ -41,6 +41,7 @@
         firebase.auth().signOut()
           .then(() => {
             this.$store.dispatch('setUser', null)
+            this.$store.dispatch('setSignedIn', false)
             localStorage.removeItem('token')
             this.$router.go('/envoy-bikes/login')
           })
