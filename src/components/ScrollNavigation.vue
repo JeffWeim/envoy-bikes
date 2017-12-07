@@ -13,7 +13,6 @@
   </section>
 </template>
 
-
 <script>
   import firebase from 'firebase'
   import debounce from 'lodash.debounce'
@@ -64,6 +63,10 @@
           } else {
             this.showScrollNav = false
           }
+
+          if (scrollTop === 0) {
+            this.showScrollNav = false
+          }
         }, 25))
       }
     }
@@ -79,6 +82,7 @@
     background: white;
     box-shadow: grey 1px 0px 17px -2px;
     width: 100%;
+    z-index: 1001;
 
     &.show {
       transform: translateY(-96px);

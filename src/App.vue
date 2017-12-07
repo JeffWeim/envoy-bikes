@@ -1,7 +1,8 @@
 <template>
-  <section class="app" id="app">
+  <section class="app" id="app" :class="{ fixed: navMenu }">
     <ScrollNavigation></ScrollNavigation>
     <navigation></navigation>
+
 
     <div class="app__wrapper">
       <router-view></router-view>
@@ -18,6 +19,11 @@
     components: {
       Navigation,
       ScrollNavigation
+    },
+    computed: {
+      navMenu() {
+        return this.$store.getters.navMenu
+      }
     },
     created() {
       if (localStorage.getItem('signedWaiver') === null) {
@@ -42,6 +48,10 @@
       max-width: 90%;
       margin: 0 auto;
     }
+  }
+
+  .fixed {
+    overflow: hidden;
   }
 
   body,

@@ -1,6 +1,5 @@
 <template>
   <div class="welcome">
-
     <div class="welcome__logo-container">
       <img src="../assets/envoy-logo.png" alt="Envoy Logo" class="welcome__logo"/>
 
@@ -48,6 +47,7 @@
     data () {
       return {
         msg: '',
+        editName: '',
         date: todaysDate,
         disabled: {
           to: todaysDate,

@@ -6,6 +6,7 @@ const home = {
     daysRef: {},
     today: '',
     todayString: '',
+    navMenu: false
   },
   mutations: {
     SET_DAY_DATA(state, data) {
@@ -22,6 +23,9 @@ const home = {
     },
     SET_TODAY_STRING(state, data) {
       state.todayString = data
+    },
+    SET_NAV_MENU(state, data) {
+      state.navMenu = data
     },
   },
   actions: {
@@ -40,6 +44,9 @@ const home = {
     setTodayString({ dispatch, commit }, data) {
       commit('SET_TODAY_STRING', data)
     },
+    setNavMenu({ dispatch, commit }, data) {
+      commit('SET_NAV_MENU', data)
+    },
   },
   getters: {
     dayData: state => state.dayData,
@@ -47,6 +54,7 @@ const home = {
     daysRef: state => state.daysRef,
     today: state => state.today,
     todayString: state => state.todayString,
+    navMenu: state => state.navMenu,
   }
 }
 
