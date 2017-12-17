@@ -2345,6 +2345,12 @@ entities@~1.1.1:
   version "1.1.1"
   resolved "https://registry.yarnpkg.com/entities/-/entities-1.1.1.tgz#6e5c2d0a5621b5dadaecef80b90edfb5cd7772f0"
 
+epic-spinners@^1.0.0:
+  version "1.0.0"
+  resolved "https://registry.yarnpkg.com/epic-spinners/-/epic-spinners-1.0.0.tgz#ca9388f754135e377ce8aec0cbd1f45ecd42347d"
+  dependencies:
+    vue "^2.5.9"
+
 errno@^0.1.3:
   version "0.1.4"
   resolved "https://registry.yarnpkg.com/errno/-/errno-0.1.4.tgz#b896e23a9e5e8ba33871fc996abd3635fc9a1c7d"
@@ -7123,6 +7129,10 @@ vue-template-es2015-compiler@^1.6.0:
 vue@^2.5.2:
   version "2.5.3"
   resolved "https://registry.yarnpkg.com/vue/-/vue-2.5.3.tgz#e1a3b1f49b6e93e574ce040b95cbc873912fecc1"
+
+vue@^2.5.9:
+  version "2.5.11"
+  resolved "https://registry.yarnpkg.com/vue/-/vue-2.5.11.tgz#80ca2657aa81f03545cd8dd5a2f55454641e6405"
 
 vuefire@^1.4.4:
   version "1.4.4"

@@ -8,7 +8,9 @@
       <img src="../assets/bike-large.svg" alt="Bike Logo" class="signup__bike"/>
     </div>
 
-    <p v-if="loading">Loading...</p>
+    <span class="signup__spinner" v-if="loading">
+      <trinity-rings-spinner :animation-duration="1500" :size="66" color="#eb4e3b" />
+    </span>
 
     <div v-if="user">
       <img :src="user.photoURL" alt="avatar" style="width: 30px; height: 30px; border-radius: 50%;"/>
@@ -27,10 +29,14 @@
 
 <script>
   import firebase from 'firebase'
+  import { TrinityRingsSpinner  } from 'epic-spinners'
 
 
   export default {
     name: 'Login',
+    components: {
+      TrinityRingsSpinner
+    },
     data() {
       return {
         loading: true,
@@ -166,6 +172,10 @@
         width: 100%;
         margin-top: 3rem;
       }
+    }
+
+    &__spinner {
+      margin-top: 25px;
     }
 
     .orange {
