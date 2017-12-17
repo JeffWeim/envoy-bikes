@@ -1,31 +1,31 @@
 
 <template>
-  <section class="edit-profile" :class="{ open: navMenu }">
-    <div class="edit-profile__container">
-      <h3 class="edit-profile__headline">Profile Information</h3>
-      <span class="edit-profile__field">
-        <p class="edit-profile__text">Email:</p>
-        <p class="edit-profile__text edit-profile__text--sub">{{ user.email }}</p>
+  <section class="profile" :class="{ open: navMenu }">
+    <div class="profile__container">
+      <h3 class="profile__headline">Profile Information</h3>
+      <span class="profile__field">
+        <p class="profile__text">Email:</p>
+        <p class="profile__text profile__text--sub">{{ user.email }}</p>
       </span>
 
-      <span class="edit-profile__field">
-        <p class="edit-profile__text">Display Name:</p>
-        <p class="edit-profile__text edit-profile__text--sub">{{ user.displayName }}</p>
+      <span class="profile__field">
+        <p class="profile__text">Display Name:</p>
+        <p class="profile__text profile__text--sub">{{ user.displayName }}</p>
       </span>
 
-      <h3 class="edit-profile__headline">Edit Profile</h3>
-      <span class="edit-profile__field">
+      <h3 class="profile__headline">Edit Profile</h3>
+      <span class="profile__field">
         <label for="displayNanme">Edit Display Name</label>
         <input type="text" v-model="editName" maxlength="15"/>
-        <a class="edit-profile__button" href="#" @click.prevent="editDisplayName">Submit</a>
+        <a class="profile__button" href="#" @click.prevent="editDisplayName">Submit</a>
       </span>
 
-      <span v-if="success" class="edit-profile__field edit-profile__field--message">
-        <p class="edit-profile__success">Success!</p>
+      <span v-if="success" class="profile__field profile__field--message">
+        <p class="profile__success">Success!</p>
       </span>
 
-      <span v-if="failed" class="edit-profile__field edit-profile__field--message">
-        <p class="edit-profile__failed">Failed!</p>
+      <span v-if="failed" class="profile__field profile__field--message">
+        <p class="profile__failed">Failed!</p>
       </span>
     </div>
   </section>
@@ -35,33 +35,35 @@
   import firebase from 'firebase'
 
   export default {
-    name: 'EditProfile',
+    name: 'Profile',
     data () {
       return {
         editName: '',
         success: false,
         failed: false,
-        user: {}
       }
     },
     computed: {
       navMenu() {
         return this.$store.getters.navMenu
       },
+      user() {
+        if (!this.$store.getters.user) {
+          return {}
+        }
+
+        return this.$store.getters.user
+      },
     },
     methods: {
-      createDate(val) {
-        debugger
-        return new Date(val)
-      },
       editDisplayName() {
         let self = this
 
         this.user.updateProfile({
           displayName: self.editName
         }).then(() => {
-          self.user = firebase.auth().currentUser
           self.successMessage()
+
           self.$store.dispatch('setUser', {
             displayName: self.user.displayName,
             photoURL: self.user.photoURL,
@@ -71,6 +73,7 @@
               lastSignInTime: self.user.metadata.lastSignInTime
             }
           })
+
           self.editName = ''
         }).catch(error => {
           console.log(error)
@@ -91,17 +94,12 @@
           this.failed = !this.failed
         }, 4000)
       }
-    },
-    created() {
-      setTimeout(() => {
-        this.user = firebase.auth().currentUser
-      }, 2000)
     }
   }
 </script>
 
 <style lang="scss" scoped>
-  .edit-profile {
+  .profile {
     position: fixed;
     background-color: white;
     height: 100%;
