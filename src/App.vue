@@ -3,10 +3,7 @@
     <ScrollNavigation></ScrollNavigation>
     <navigation></navigation>
 
-
-    <div class="app__wrapper">
-      <router-view></router-view>
-    </div>
+    <router-view></router-view>
   </section>
 </template>
 
@@ -41,13 +38,6 @@
     text-align: center;
     color: #2c3e50;
     height: 100%;
-
-    &__wrapper {
-      width: 100%;
-      height: 100%;
-      max-width: 90%;
-      margin: 0 auto;
-    }
   }
 
   .fixed {
