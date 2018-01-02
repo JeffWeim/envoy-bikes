@@ -115,7 +115,6 @@
       color: #eb4e3b;
       text-decoration: none;
       border: 1px solid #eb4e3b;
-      border-radius: 5px;
       padding: 5px;
     }
 

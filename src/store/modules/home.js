@@ -1,9 +1,24 @@
 
+import firebase from 'firebase'
+
+let config = {
+  apiKey: "AIzaSyBjWk3yrbx8H0vKuRm_lbMseFp8ZwqKsjo",
+  authDomain: "envoy-bikes.firebaseapp.com",
+  databaseURL: "https://envoy-bikes.firebaseio.com",
+  projectId: "envoy-bikes",
+  storageBucket: "envoy-bikes.appspot.com",
+  messagingSenderId: "411868926692"
+}
+
+let app = firebase.initializeApp(config)
+let db = app.database()
+let daysRef = db.ref('days')
+
 const home = {
   state: {
     dayData: [],
     key: '',
-    daysRef: {},
+    daysRef: daysRef,
     today: '',
     todayString: '',
     navMenu: false
@@ -14,9 +29,6 @@ const home = {
     },
     SET_KEY(state, data) {
       state.key = data
-    },
-    SET_DAYS_REFERENCE(state, data) {
-      state.daysRef = data
     },
     SET_TODAY(state, data) {
       state.today = data
@@ -34,9 +46,6 @@ const home = {
     },
     setKey({ dispatch, commit }, data) {
       commit('SET_KEY', data)
-    },
-    setDaysReference({ dispatch, commit }, data) {
-      commit('SET_DAYS_REFERENCE', data)
     },
     setToday({ dispatch, commit }, data) {
       commit('SET_TODAY', data)

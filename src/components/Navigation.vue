@@ -14,7 +14,7 @@
       </span>
     </div>
 
-    <Profile></Profile>
+    <Profile v-on:forceNavUpdate="update"></Profile>
   </section>
 </template>
 
@@ -29,10 +29,6 @@
     },
     computed: {
       user() {
-        if (!this.$store.getters.user) {
-          return {}
-        }
-
         return this.$store.getters.user
       },
       navMenu() {
@@ -43,6 +39,10 @@
       }
     },
     methods: {
+      update() {
+        // Force update on 'user' computed property - need this since Vue can't deep watch nested arrays with computed properties
+        this.$forceUpdate()
+      },
       toggleMenu() {
         if (this.navMenu) {
           this.$store.dispatch('setNavMenu', false)
@@ -84,12 +84,12 @@
       flex-direction: row;
       align-items: center;
       justify-content: space-between;
-      width: 90%;
-      max-width: 1000px;
+      width: 100%;
+      max-width: 90%;
       margin: 0 auto;
 
-      @media screen and (min-width: 768px) {
-        width: 100%;
+      @media screen and (min-width: 990px) {
+        max-width: 990px;
       }
     }
 

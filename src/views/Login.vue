@@ -63,7 +63,6 @@
             console.log(error)
           })
       },
-
       signOut() {
         firebase.auth().signOut()
           .then(() => {
@@ -78,9 +77,6 @@
     },
     beforeCreate() {
       firebase.auth().onAuthStateChanged(user => {
-        if (user) {
-          this.$store.dispatch('setUser', user)
-        }
         this.loading = false
       })
 

@@ -10,29 +10,11 @@
   import TimeBlock from '@/components/TimeBlock'
   import firebase from 'firebase'
 
-  let config = {
-    apiKey: "AIzaSyBjWk3yrbx8H0vKuRm_lbMseFp8ZwqKsjo",
-    authDomain: "envoy-bikes.firebaseapp.com",
-    databaseURL: "https://envoy-bikes.firebaseio.com",
-    projectId: "envoy-bikes",
-    storageBucket: "envoy-bikes.appspot.com",
-    messagingSenderId: "411868926692"
-  }
-
-  let app = firebase.initializeApp(config)
-  let db = app.database()
-  let daysRef = db.ref('days')
-  let userRef = db.ref('users')
-
   export default {
     name: 'HomeView',
     components: {
       Welcome,
       TimeBlock,
-    },
-    firebase: {
-      days: db.ref('days'),
-      users: db.ref('users')
     },
     computed: {
       dayData() {
@@ -43,7 +25,10 @@
       },
       today() {
         return this.$store.getters.today
-      }
+      },
+      daysRef() {
+        return this.$store.getters.daysRef
+      },
     },
     methods: {
       getData() {
@@ -69,7 +54,7 @@
         let emptyDayData = require('../data/day')
         emptyDayData.day = today
 
-        daysRef.orderByChild('day')
+        this.daysRef.orderByChild('day')
           .equalTo(today)
           .on('value', snapshot => {
             let val = snapshot.val()
@@ -79,15 +64,15 @@
             }
 
             if (!val) {
-              daysRef.push(emptyDayData)
+              this.daysRef.push(emptyDayData)
               self.$store.dispatch('setDayData', emptyDayData)
             } else {
               self.$store.dispatch('setDayData', val[self.key])
             }
           })
       },
-      checkSession() {
-        let user = firebase.auth().currentUser
+      checkSession(u) {
+        let user = u
         let credential
         let lastLogin = new Date(user.metadata.lastSignInTime)
         let today = new Date()
@@ -110,16 +95,13 @@
       }
     },
     created() {
-      this.$store.dispatch('setDaysReference', daysRef)
-      this.$store.dispatch('setUsersReference', userRef)
       this.getData()
     },
     beforeCreate() {
       firebase.auth().onAuthStateChanged(user => {
         if (user) {
           this.$store.dispatch('setUser', user)
-
-          this.checkSession()
+          this.checkSession(user)
         }
       })
     },

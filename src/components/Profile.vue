@@ -8,17 +8,20 @@
         <p class="profile__text profile__text--sub">{{ user.email }}</p>
       </span>
 
-      <span class="profile__field">
+      <div class="profile__field">
         <p class="profile__text">Display Name:</p>
-        <p class="profile__text profile__text--sub">{{ user.displayName }}</p>
-      </span>
 
-      <h3 class="profile__headline">Edit Profile</h3>
-      <span class="profile__field">
-        <label for="displayNanme">Edit Display Name</label>
-        <input type="text" v-model="editName" maxlength="15"/>
-        <a class="profile__button" href="#" @click.prevent="editDisplayName">Submit</a>
-      </span>
+        <span v-if="!showEditName">
+          <p class="profile__text profile__text--sub inline">{{ user.displayName }}</p>
+          <a class="profile__button profile__button--edit inline" href="#" @click.prevent="toggleEditName">Edit</a>
+        </span>
+
+        <span v-if="showEditName">
+          <input type="text" v-model="editName" maxlength="15"/>
+          <a class="profile__button" href="#" @click.prevent="editDisplayName">Submit</a>
+          <a class="profile__button" href="#" @click.prevent="toggleEditName">Cancel</a>
+        </span>
+      </div>
 
       <span v-if="success" class="profile__field profile__field--message">
         <p class="profile__success">Success!</p>
@@ -41,6 +44,7 @@
         editName: '',
         success: false,
         failed: false,
+        showEditName: false
       }
     },
     computed: {
@@ -48,36 +52,27 @@
         return this.$store.getters.navMenu
       },
       user() {
-        if (!this.$store.getters.user) {
-          return {}
-        }
-
         return this.$store.getters.user
       },
     },
     methods: {
+      toggleEditName() {
+        this.showEditName = !this.showEditName
+      },
       editDisplayName() {
         let self = this
 
         this.user.updateProfile({
           displayName: self.editName
         }).then(() => {
+          this.$emit('forceNavUpdate')
           self.successMessage()
-
-          self.$store.dispatch('setUser', {
-            displayName: self.user.displayName,
-            photoURL: self.user.photoURL,
-            uid: self.user.uid,
-            email: self.user.email,
-            metadata: {
-              lastSignInTime: self.user.metadata.lastSignInTime
-            }
-          })
-
+          self.toggleEditName()
           self.editName = ''
         }).catch(error => {
           console.log(error)
           self.failureMessage()
+          self.toggleEditName()
         })
       },
       successMessage() {
@@ -150,14 +145,26 @@
       font-size: 15px;
       border: 1px solid #eb4e3b;
       color: #eb4e3b;
-      border-radius: 4px;
       text-decoration: none;
+
+      &--edit {
+        margin-left: 10px;
+      }
     }
 
     &__field {
       &--message {
         position: absolute;
         bottom: 50px;
+      }
+    }
+
+    &__text,
+    &__lable {
+      color: #eb4e3b;
+
+      &--sub {
+        color: #a1a8af;
       }
     }
 
@@ -171,6 +178,10 @@
       color: #d56363;
       font-size: 20px;
       font-weight: bold;
+    }
+
+    .inline {
+      display: inline-block;
     }
   }
 </style>

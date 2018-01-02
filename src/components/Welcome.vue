@@ -12,7 +12,7 @@
 
     <br><br>
 
-    <datepicker :inline="true" :value="date" full-month-name="true" v-on:selected="dateSelected" :disabled="disabled" placeholder="Pick A Day In The Next Week..." input-class="welcome__datepicker" id="welcome__datepicker"></datepicker>
+    <datepicker :inline="true" :value="date" :full-month-name="true" v-on:selected="dateSelected" :disabled="disabled" placeholder="Pick A Day In The Next Week..." input-class="welcome__datepicker" id="welcome__datepicker"></datepicker>
   </div>
 </template>
 

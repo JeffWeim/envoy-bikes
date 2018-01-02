@@ -26,10 +26,6 @@
     },
     computed: {
       user() {
-        if (!this.$store.getters.user) {
-          return {}
-        }
-
         return this.$store.getters.user
       },
       todayString() {
