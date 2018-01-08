@@ -11,7 +11,7 @@
     "build": "node build/build.js",
     "unit": "cross-env BABEL_ENV=test karma start test/unit/karma.conf.js --single-run",
     "test": "npm run unit",
-    "deploy": "npm run build && vue-cli-ghpages --message App Update"
+    "deploy": "npm run build && vue-cli-ghpages --message 'App Update'"
   },
   "dependencies": {
     "epic-spinners": "^1.0.0",

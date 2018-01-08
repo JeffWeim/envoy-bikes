@@ -10,11 +10,13 @@ module.exports = {
       "rider_names": {
         "a": {
           "name": "",
-          "uid": ""
+          "uid": "",
+          "photo": "",
         },
         "b": {
           "name": "",
-          "uid": ""
+          "uid": "",
+          "photo": "",
         }
       },
     },
@@ -26,11 +28,13 @@ module.exports = {
       "rider_names": {
         "a": {
           "name": "",
-          "uid": ""
+          "uid": "",
+          "photo": "",
         },
         "b": {
           "name": "",
-          "uid": ""
+          "uid": "",
+          "photo": "",
         }
       },
     },
@@ -42,11 +46,13 @@ module.exports = {
       "rider_names": {
         "a": {
           "name": "",
-          "uid": ""
+          "uid": "",
+          "photo": "",
         },
         "b": {
           "name": "",
-          "uid": ""
+          "uid": "",
+          "photo": "",
         }
       },
     },
@@ -58,11 +64,13 @@ module.exports = {
       "rider_names": {
         "a": {
           "name": "",
-          "uid": ""
+          "uid": "",
+          "photo": "",
         },
         "b": {
           "name": "",
-          "uid": ""
+          "uid": "",
+          "photo": "",
         }
       },
     },
@@ -74,11 +82,13 @@ module.exports = {
       "rider_names": {
         "a": {
           "name": "",
-          "uid": ""
+          "uid": "",
+          "photo": "",
         },
         "b": {
           "name": "",
-          "uid": ""
+          "uid": "",
+          "photo": "",
         }
       },
     },
@@ -90,11 +100,13 @@ module.exports = {
       "rider_names": {
         "a": {
           "name": "",
-          "uid": ""
+          "uid": "",
+          "photo": "",
         },
         "b": {
           "name": "",
-          "uid": ""
+          "uid": "",
+          "photo": "",
         }
       },
     },
@@ -106,11 +118,13 @@ module.exports = {
       "rider_names": {
         "a": {
           "name": "",
-          "uid": ""
+          "uid": "",
+          "photo": "",
         },
         "b": {
           "name": "",
-          "uid": ""
+          "uid": "",
+          "photo": "",
         }
       },
     },
@@ -122,11 +136,13 @@ module.exports = {
       "rider_names": {
         "a": {
           "name": "",
-          "uid": ""
+          "uid": "",
+          "photo": "",
         },
         "b": {
           "name": "",
-          "uid": ""
+          "uid": "",
+          "photo": "",
         }
       },
     },
@@ -138,11 +154,13 @@ module.exports = {
       "rider_names": {
         "a": {
           "name": "",
-          "uid": ""
+          "uid": "",
+          "photo": "",
         },
         "b": {
           "name": "",
-          "uid": ""
+          "uid": "",
+          "photo": "",
         }
       },
     },
@@ -154,11 +172,13 @@ module.exports = {
       "rider_names": {
         "a": {
           "name": "",
-          "uid": ""
+          "uid": "",
+          "photo": "",
         },
         "b": {
           "name": "",
-          "uid": ""
+          "uid": "",
+          "photo": "",
         }
       },
     },
@@ -170,11 +190,13 @@ module.exports = {
       "rider_names": {
         "a": {
           "name": "",
-          "uid": ""
+          "uid": "",
+          "photo": "",
         },
         "b": {
           "name": "",
-          "uid": ""
+          "uid": "",
+          "photo": "",
         }
       },
     },
@@ -186,11 +208,13 @@ module.exports = {
       "rider_names": {
         "a": {
           "name": "",
-          "uid": ""
+          "uid": "",
+          "photo": "",
         },
         "b": {
           "name": "",
-          "uid": ""
+          "uid": "",
+          "photo": "",
         }
       },
     },
@@ -202,11 +226,13 @@ module.exports = {
       "rider_names": {
         "a": {
           "name": "",
-          "uid": ""
+          "uid": "",
+          "photo": "",
         },
         "b": {
           "name": "",
-          "uid": ""
+          "uid": "",
+          "photo": "",
         }
       },
     },
@@ -218,11 +244,13 @@ module.exports = {
       "rider_names": {
         "a": {
           "name": "",
-          "uid": ""
+          "uid": "",
+          "photo": "",
         },
         "b": {
           "name": "",
-          "uid": ""
+          "uid": "",
+          "photo": "",
         }
       },
     },
@@ -234,11 +262,13 @@ module.exports = {
       "rider_names": {
         "a": {
           "name": "",
-          "uid": ""
+          "uid": "",
+          "photo": "",
         },
         "b": {
           "name": "",
-          "uid": ""
+          "uid": "",
+          "photo": "",
         }
       },
     },
@@ -250,11 +280,13 @@ module.exports = {
       "rider_names": {
         "a": {
           "name": "",
-          "uid": ""
+          "uid": "",
+          "photo": "",
         },
         "b": {
           "name": "",
-          "uid": ""
+          "uid": "",
+          "photo": "",
         }
       },
     }

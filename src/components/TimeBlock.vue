@@ -7,52 +7,34 @@
 
     <div class="time-block__reservations" :class="{ disabled: isDisabled }">
       <!-- Card A -->
-      <div class="time-block__card time-block__card--a" v-if="time.rider_names.a.name && !showSpotAForm">
-        <span class="time-block__card-letter time-block__card-letter--a">1</span>
+      <div class="time-block__card time-block__card--a">
+        <span v-if="!time.rider_names.a.name" class="time-block__card-letter time-block__card-letter--a">1</span>
+        <span v-else class="time-block__card-img-container"><img class="time-block__card-img" :src="userPhoto" alt="User Photo" /></span>
+
         <p class="time-block__card-name">{{ time.rider_names.a.name }}</p>
-        <a href="#" @click.prevent="showSpotAForm = !showSpotAForm" v-if="time.rider_names.a.uid === userUid">Edit</a>
-        <p class="time-block__card-reserved--a" v-else>Reserved</p>
-      </div>
 
-      <!-- Card A -->
-      <div class="time-block__card time-block__card--a" v-else>
-        <span class="time-block__card-letter time-block__card-letter--a">1</span>
-        <span v-if="!time.rider_names.a.name && !showSpotAForm">
-          <button @click.prevent="showSpotAForm = !showSpotAForm">Reserve Bike 1</button>
+        <span v-if="!time.rider_names.a.name">
+          <button :data-id="time.id" @click.prevent="toggleModal($event, 'a')">Reserve Bike 1</button>
         </span>
-
-        <span class="time-block__card-input" v-if="showSpotAForm">
-          <input placeholder="Ex. John D." maxlength="21" type="text" name="person-a" v-model="usersName"/>
-          <span>
-            <a :data-id="time.id" href="#" @click.prevent="deleteSpot($event, 'a')" v-if="time.rider_names.a.name">Delete</a>
-            <a :data-id="time.id" href="#" @click.prevent="toggleModal($event, 'a')" v-else>Reserve</a>
-            <a href="#" @click.prevent="showSpotAForm = !showSpotAForm">Cancel</a>
-          </span>
+        <span v-else>
+          <p class="time-block__card-reserved--a" v-if="time.rider_names.a.uid !== userUid">Reserved</p>
+          <a :data-id="time.id" href="#" @click.prevent="deleteSpot($event, 'a')" v-else>Delete <br> Reservation</a>
         </span>
       </div>
 
       <!-- Card B -->
-      <div class="time-block__card time-block__card--b" v-if="time.rider_names.b.name && !showSpotBForm">
-        <span class="time-block__card-letter time-block__card-letter--b">2</span>
+      <div class="time-block__card time-block__card--b">
+        <span v-if="!time.rider_names.b.name" class="time-block__card-letter time-block__card-letter--b">2</span>
+        <span v-else class="time-block__card-img-container"><img class="time-block__card-img" :src="userPhoto" alt="User Photo" /></span>
+
         <p class="time-block__card-name">{{ time.rider_names.b.name }}</p>
-        <a href="#" @click.prevent="showSpotBForm = !showSpotBForm" v-if="time.rider_names.b.uid === userUid">Edit</a>
-        <p class="time-block__card-reserved--b" v-else>Reserved</p>
-      </div>
-
-      <!-- Card B -->
-      <div class="time-block__card time-block__card--b" v-else>
-        <span class="time-block__card-letter time-block__card-letter--b">2</span>
-        <span v-if="!time.rider_names.b.name && !showSpotBForm">
-          <button @click.prevent="showSpotBForm = !showSpotBForm">Reserve Bike 2</button>
+        
+        <span v-if="!time.rider_names.b.name">
+          <button :data-id="time.id" @click.prevent="toggleModal($event, 'b')">Reserve Bike 2</button>
         </span>
-
-        <span class="time-block__card-input" v-if="showSpotBForm">
-          <input placeholder="Ex. John D." maxlength="21" type="text" name="person-b" v-model="usersName"/>
-          <span>
-            <a :data-id="time.id" href="#" @click.prevent="deleteSpot($event, 'b')" v-if="time.rider_names.b.name">Delete</a>
-            <a :data-id="time.id" href="#" @click.prevent="toggleModal($event, 'b')" v-else>Reserve</a>
-            <a href="#" @click.prevent="showSpotBForm = !showSpotBForm">Cancel</a>
-          </span>
+        <span v-else>
+          <p class="time-block__card-reserved--b" v-if="time.rider_names.b.uid !== userUid">Reserved</p>
+          <a :data-id="time.id" href="#" @click.prevent="deleteSpot($event, 'b')" v-else>Delete <br> Reservation</a>
         </span>
       </div>
     </div>
@@ -89,17 +71,18 @@
     },
     data() {
       return {
-        showSpotAForm: false,
-        showSpotBForm: false,
         showModal: false,
         bike: '',
         event: undefined,
         userUid: this.$store.getters.user.uid,
-        usersName: this.$store.getters.user.displayName
+        usersName: this.$store.getters.user.displayName,
+        userPhoto: this.time.rider_names.a.photo || this.$store.getters.user.photoURL
       }
     },
     computed: {
       id () {
+        debugger
+
         return this.time.id
       },
       daysRef() {
@@ -148,47 +131,20 @@
         let timeBlockId = this.event.srcElement.dataset.id
         localStorage.setItem('signedWaiver', true)
 
-        if (this.bike === 'a') {
-          this.daysRef.child(`${this.key}/times/${timeBlockId}/rider_names/${this.bike}/name`).set(this.usersName)
-          this.daysRef.child(`${this.key}/times/${timeBlockId}/rider_names/${this.bike}/uid`).set(this.userUid)
-        }
-
-        if (this.bike === 'b') {
-          this.showSpotBForm = false
-          this.daysRef.child(`${this.key}/times/${timeBlockId}/rider_names/${this.bike}/name`).set(this.usersName)
-          this.daysRef.child(`${this.key}/times/${timeBlockId}/rider_names/${this.bike}/uid`).set(this.userUid)
-        }
-
+        this.daysRef.child(`${this.key}/times/${timeBlockId}/rider_names/${this.bike}/name`).set(this.$store.getters.user.displayName
+)
+        this.daysRef.child(`${this.key}/times/${timeBlockId}/rider_names/${this.bike}/uid`).set(this.userUid)
+        this.daysRef.child(`${this.key}/times/${timeBlockId}/rider_names/${this.bike}/photo`).set(this.userPhoto)
         this.daysRef.child(`${this.key}/contains_reservations/`).set(true)
       },
       deleteSpot(e, bike) {
         let timeBlockId = e.srcElement.dataset.id
         this.usersName = ''
 
-        if (bike === 'a') {
-          this.daysRef.child(`${this.key}/times/${timeBlockId}/rider_names/${bike}/name`).set('')
-          this.daysRef.child(`${this.key}/times/${timeBlockId}/rider_names/${bike}/uid`).set('')
-        }
-
-        if (bike === 'b') {
-          this.showSpotBForm = false
-          this.daysRef.child(`${this.key}/times/${timeBlockId}/rider_names/${bike}/name`).set('')
-          this.daysRef.child(`${this.key}/times/${timeBlockId}/rider_names/${bike}/uid`).set('')
-        }
-      },
-    },
-    watch: {
-      time (value) {
-        if (value) {
-          // TODO: Find a solution for this hack. Solves: This component's properties not
-          // reseting when we toggle for new dayData and update the TimeBlock component
-          this.showSpotAForm = false
-          this.showSpotBForm = false
-        }
+        this.daysRef.child(`${this.key}/times/${timeBlockId}/rider_names/${bike}/name`).set('')
+        this.daysRef.child(`${this.key}/times/${timeBlockId}/rider_names/${bike}/uid`).set('')
+        this.daysRef.child(`${this.key}/times/${timeBlockId}/rider_names/${bike}/photo`).set('')
       }
-    },
-    creatd() {
-      this.usersName
     }
   }
 </script>
@@ -251,12 +207,6 @@
         margin-bottom: 0;
       }
 
-      input {
-        border: 1px solid #edeff5;
-        height: 25px;
-        padding-left: 10px;
-      }
-
       a {
         text-decoration: none;
         font-weight: bold;
@@ -298,6 +248,29 @@
     &__card-name {
       font-size: 20px;
       font-weight: bold;
+      margin: 0 10px;
+    }
+
+    &__card-img-container {
+      position: relative;
+      top: 10px;
+
+      &:after {
+        content: url('../assets/bike.svg');
+        position: absolute;
+        height: 25px;
+        width: 25px;
+        top: -18px;
+        left: 5px;
+      }
+    }
+
+    &__card-img {
+      height: 40px;
+      width: 40px;
+      border-radius: 50%;
+      position: relative;
+      top: 3px;
     }
 
     &__card-letter {
@@ -328,16 +301,6 @@
 
       &--b {
         background: #558de1;
-      }
-    }
-
-    &__card-input {
-      display: flex;
-      flex-direction: column;
-      flex-basis: 50%;
-
-      a:first-child {
-        margin-right: 15px;
       }
     }
 

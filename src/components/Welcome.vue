@@ -1,7 +1,7 @@
 <template>
   <div class="welcome">
     <div class="welcome__logo-container">
-      <img src="../assets/envoy-logo.png" alt="Envoy Logo" class="welcome__logo"/>
+      <img style="max-width: 120px;" src="../assets/envoy-logo.png" alt="Envoy Logo" class="welcome__logo"/>
 
       <img src="../assets/bike-large.svg" alt="Bike Logo" class="welcome__bike"/>
     </div>
@@ -179,17 +179,18 @@
       display: flex;
       flex-direction: column;
       justify-content: center;
-      align-self: center;
-      width: 20%;
-      height: 40px;
+      align-items: center;
       margin: 2rem auto;
       margin-top: 6rem;
+      max-width: 220px;
+      max-height: 100%;
 
       img:first-child {
         margin-bottom: 1rem;
       }
 
       @media screen and (min-width: 480px) {
+        max-height: 40px;
         flex-direction: row;
 
         img:first-child {
@@ -198,10 +199,18 @@
       }
     }
 
-    &__logo,
-    &__bike {
-      max-width: 100%;
+    &__logo {
       width: 120px;
+      margin: 0 auto;
+    }
+
+    &__bike {
+      max-width: 35%;
+
+      @media screen and (min-width: 480px) {
+        max-width: 25%;
+        margin-right: 20px;
+      }
     }
   }
 </style>

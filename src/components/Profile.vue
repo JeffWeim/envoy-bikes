@@ -102,8 +102,13 @@
     transition: transform 350ms ease;
     transform: translateX(-1500px);
     top: 0;
-    z-index: -1;
-    padding-top: 54px;
+    z-index: 0;
+    margin-top: 55px;
+
+    &:after {
+      opacity: 0;
+      transition: opacity 1000ms ease;
+    }
 
     @media screen and (min-width: 768px) {
       width: 50vw;
@@ -112,6 +117,19 @@
 
     &.open {
       transform: translateX(0px);
+
+      @media screen and (min-width: 768px) {
+        &:after {
+          content: '';
+          opacity: 1;
+          position: absolute;
+          top: 0;
+          left: 50vw;
+          height: 100%;
+          width: 100%;
+          background: rgba(0, 0, 0, 0.4);
+        }
+      }
     }
 
     &__container {

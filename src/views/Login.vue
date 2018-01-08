@@ -126,33 +126,37 @@
       flex-direction: column;
       justify-content: center;
       align-items: center;
-      width: 100%;
-      max-width: 200px;
-      height: auto;
-      margin: 0 auto;
+      margin: 2rem auto;
+      margin-top: 6rem;
+      max-width: 220px;
+      max-height: 100%;
+
+      img:first-child {
+        margin-bottom: 1rem;
+      }
 
       @media screen and (min-width: 480px) {
+        max-height: 40px;
         flex-direction: row;
-        justify-content: space-between;
+
+        img:first-child {
+          margin-bottom: 0;
+        }
       }
     }
 
     &__logo {
-      margin-bottom: 1rem;
       width: 120px;
+      margin: 0 auto;
+    }
+
+    &__bike {
+      max-width: 35%;
 
       @media screen and (min-width: 480px) {
-        margin-bottom: 0;
+        max-width: 25%;
+        margin-right: 20px;
       }
-    }
-
-    &__bike {
-      width: 70px;
-    }
-
-    &__logo,
-    &__bike {
-      max-width: 100%;
     }
 
     &__directions {
