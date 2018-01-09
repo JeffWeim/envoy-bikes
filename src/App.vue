@@ -38,10 +38,26 @@
     text-align: center;
     color: #2c3e50;
     height: 100%;
+
+    &:after {
+      opacity: 0;
+      transition: opacity 500ms ease;
+    }
   }
 
   .fixed {
     overflow: hidden;
+
+    &:after {
+      content: '';
+      position: absolute;
+      height: 100%;
+      width: 100%;
+      background: rgba($color: #000000, $alpha: .5);
+      top: 0;
+      left: 0;
+      opacity: 1;
+    }
   }
 
   body,

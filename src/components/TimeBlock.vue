@@ -28,7 +28,7 @@
         <span v-else class="time-block__card-img-container"><img class="time-block__card-img" :src="userPhoto" alt="User Photo" /></span>
 
         <p class="time-block__card-name">{{ time.rider_names.b.name }}</p>
-        
+
         <span v-if="!time.rider_names.b.name">
           <button :data-id="time.id" @click.prevent="toggleModal($event, 'b')">Reserve Bike 2</button>
         </span>
@@ -38,6 +38,11 @@
         </span>
       </div>
     </div>
+
+    <span class="time-block__calendar-link" :class="{ 'show': showCalendarLink }">
+      <AddToCalendar title="Bike Reservation" location="34 Tesla, Irvine, CA 92618" :start="new Date(start)" :end="new Date(end)" details="Bike">
+      </AddToCalendar>
+    </span>
 
     <!-- Modal -->
     <modal v-if="showModal" @close="showModal = false">
@@ -60,6 +65,7 @@
 
 <script>
   import Modal from '@/components/Modal'
+  import AddToCalendar from '@/components/AddToCalendar'
 
   export default {
     name: 'TimeBlock',
@@ -67,7 +73,8 @@
       'time'
     ],
     components: {
-      Modal
+      Modal,
+      AddToCalendar,
     },
     data() {
       return {
@@ -80,9 +87,16 @@
       }
     },
     computed: {
+      showCalendarLink() {
+        return ((this.time.rider_names.b.uid === this.userUid || this.time.rider_names.a.uid === this.userUid) && (this.time.rider_names.b || this.time.rider_names.a))
+      },
+      start() {
+        return `${this.dayData.day} ${this.time.hour_begin}:${this.time.minutes_begin}`
+      },
+      end() {
+        return `${this.dayData.day} ${this.time.hour_end}:${this.time.minutes_end}`
+      },
       id () {
-        debugger
-
         return this.time.id
       },
       daysRef() {
@@ -155,6 +169,8 @@
     justify-content: flex-start;
     align-items: flex-start;
     flex-direction: column;
+    margin-bottom: 30px;
+    position: relative;
 
     &__time {
       font-family: 'Avenir', Helvetica, Arial, sans-serif;
@@ -173,6 +189,7 @@
       align-items: center;
       width: 100%;
       flex-wrap: wrap;
+      z-index: 10;
 
       @media screen and (min-width: 768px) {
         max-width: 1000px;
@@ -311,6 +328,20 @@
 
       &--b {
         color: #558de1
+      }
+    }
+
+    &__calendar-link {
+      position: absolute;
+      transform: translateY(-20px);
+      opacity: 0;
+      transition: all 350ms ease;
+      bottom: 0;
+      z-index: 1;
+
+      &.show {
+        opacity: 1;
+        transform: translateY(30px);
       }
     }
 
