@@ -145,8 +145,7 @@
         let timeBlockId = this.event.srcElement.dataset.id
         localStorage.setItem('signedWaiver', true)
 
-        this.daysRef.child(`${this.key}/times/${timeBlockId}/rider_names/${this.bike}/name`).set(this.$store.getters.user.displayName
-)
+        this.daysRef.child(`${this.key}/times/${timeBlockId}/rider_names/${this.bike}/name`).set(this.$store.getters.user.displayName)
         this.daysRef.child(`${this.key}/times/${timeBlockId}/rider_names/${this.bike}/uid`).set(this.userUid)
         this.daysRef.child(`${this.key}/times/${timeBlockId}/rider_names/${this.bike}/photo`).set(this.userPhoto)
         this.daysRef.child(`${this.key}/contains_reservations/`).set(true)
