@@ -1,13 +1,12 @@
-
 import firebase from 'firebase'
 
 let config = {
-  apiKey: "AIzaSyBjWk3yrbx8H0vKuRm_lbMseFp8ZwqKsjo",
-  authDomain: "envoy-bikes.firebaseapp.com",
-  databaseURL: "https://envoy-bikes.firebaseio.com",
-  projectId: "envoy-bikes",
-  storageBucket: "envoy-bikes.appspot.com",
-  messagingSenderId: "411868926692"
+  apiKey: 'AIzaSyBjWk3yrbx8H0vKuRm_lbMseFp8ZwqKsjo',
+  authDomain: 'envoy-bikes.firebaseapp.com',
+  databaseURL: 'https://envoy-bikes.firebaseio.com',
+  projectId: 'envoy-bikes',
+  storageBucket: 'envoy-bikes.appspot.com',
+  messagingSenderId: '411868926692'
 }
 
 let app = firebase.initializeApp(config)
@@ -38,7 +37,7 @@ const home = {
     },
     SET_NAV_MENU(state, data) {
       state.navMenu = data
-    },
+    }
   },
   actions: {
     setDayData({ dispatch, commit }, data) {
@@ -55,7 +54,7 @@ const home = {
     },
     setNavMenu({ dispatch, commit }, data) {
       commit('SET_NAV_MENU', data)
-    },
+    }
   },
   getters: {
     dayData: state => state.dayData,
@@ -63,8 +62,8 @@ const home = {
     daysRef: state => state.daysRef,
     today: state => state.today,
     todayString: state => state.todayString,
-    navMenu: state => state.navMenu,
+    navMenu: state => state.navMenu
   }
 }
 
-export default home;
+export default home

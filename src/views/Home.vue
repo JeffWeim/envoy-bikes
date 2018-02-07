@@ -1,6 +1,6 @@
 <template>
   <section class="home">
-    <welcome></welcome>
+    <Welcome></Welcome>
     <TimeBlock :key="time.id" v-for="time in dayData.times" :time="time"></TimeBlock>
   </section>
 </template>
