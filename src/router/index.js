@@ -1,8 +1,8 @@
 import Vue from 'vue'
 import Router from 'vue-router'
 import store from '@/store/index'
-import Home from '@/views/Home.vue'
-import Login from '@/views/Login.vue'
+const Home = () => import('@/views/Home.vue')
+const Login = () => import('@/views/Login.vue')
 
 Vue.use(Router)
 
@@ -21,7 +21,7 @@ const router = new Router({
     {
       path: '/envoy-bikes/login',
       name: 'Login',
-      component: Login,
+      component: Login
     },
     {
       path: '*',

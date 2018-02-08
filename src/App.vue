@@ -9,7 +9,7 @@
 
 <script>
 import Navigation from '@/components/Navigation'
-import ScrollNavigation from '@/components/ScrollNavigation'
+const ScrollNavigation = () => import('@/components/ScrollNavigation')
 
 export default {
   name: 'app',

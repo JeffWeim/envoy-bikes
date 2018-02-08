@@ -64,8 +64,8 @@
 </template>
 
 <script>
-import Modal from '@/components/Modal'
-import AddToCalendar from '@/components/AddToCalendar'
+const Modal = () => import('@/components/Modal')
+const AddToCalendar = () => import('@/components/AddToCalendar')
 
 export default {
   name: 'TimeBlock',
